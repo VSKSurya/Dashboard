@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf9f6">
+  <title>Hello World · Instagram</title>
+  <style>
+    :root{color-scheme:light;--ink:#242424;--muted:#8e8e8e;--line:#e9e7e3;--paper:#fff;--bg:#faf9f6;--pink:#d54883;--violet:#8653c7}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button{font:inherit;color:inherit;cursor:pointer}a{color:inherit;text-decoration:none}
+    .shell{max-width:1170px;margin:auto;min-height:100vh;display:grid;grid-template-columns:230px minmax(0,620px) 290px;gap:28px;padding:0 24px}
+    .sidebar{height:100vh;position:sticky;top:0;border-right:1px solid var(--line);padding:30px 18px 24px 0;display:flex;flex-direction:column}.brand{font-family:"Brush Script MT",cursive;font-size:36px;font-weight:600;letter-spacing:-1.5px;margin:0 0 34px 8px}.nav{display:grid;gap:10px}.nav a{height:48px;display:flex;align-items:center;gap:15px;padding:0 10px;border-radius:9px;font-size:15px}.nav a:hover{background:#f0eeeb}.nav svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.nav .active{font-weight:700}.nav .avatar-mini{width:25px;height:25px;border-radius:50%;background:linear-gradient(145deg,#ffd178,#f3827b 48%,#9665d8);display:grid;place-items:center;color:#fff;font-size:13px}.more{margin-top:auto}
+    main{padding:30px 0 60px}.stories{display:flex;gap:18px;overflow:auto;padding:4px 3px 20px;margin-bottom:16px;scrollbar-width:none}.stories::-webkit-scrollbar{display:none}.story{width:72px;flex:0 0 72px;text-align:center;font-size:12px;color:#4f4d4a}.ring{width:66px;height:66px;padding:3px;border-radius:50%;margin:0 auto 6px;background:linear-gradient(35deg,#ffd776,#f15554,#c13584,#833ab4)}.ring img,.ring .initial{width:100%;height:100%;border-radius:50%;border:2px solid var(--paper);object-fit:cover;display:grid;place-items:center;color:white;font-size:23px;font-weight:600}.s1{background:linear-gradient(135deg,#5c7772,#f0b58b)}.s2{background:linear-gradient(135deg,#d3a36c,#c85f52)}.s3{background:linear-gradient(135deg,#698d90,#cad6ab)}.s4{background:linear-gradient(135deg,#c17d9c,#f0bd86)}.s5{background:linear-gradient(135deg,#415678,#e6a89a)}
+    .post{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:24px}.post-head{height:62px;padding:0 15px;display:flex;align-items:center;gap:10px}.userpic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#ffd26e,#ed6982 55%,#9d5bc7);color:white;font-weight:700}.identity{flex:1}.identity strong{font-size:13px}.verified{color:#3897f0;font-size:12px}.location{font-size:11px;color:#666}.dots{font-size:22px;letter-spacing:2px;line-height:1}.art{aspect-ratio:1.23/1;position:relative;overflow:hidden;background:radial-gradient(ellipse at 75% 18%,#fff8df 0 5%,transparent 22%),linear-gradient(150deg,#f3d8b8 0%,#f2bba9 37%,#d8889f 70%,#856d9d 100%);display:grid;place-items:center}.art:before,.art:after{content:"";position:absolute;border-radius:50%;filter:blur(1px)}.art:before{width:360px;height:360px;right:-100px;bottom:-205px;background:#f7dfbd;box-shadow:-174px -23px 0 -47px #ca7187,-240px 24px 0 -82px #855f7d}.art:after{width:240px;height:240px;left:-105px;top:-115px;background:#f9e6cc;opacity:.76}.sun{position:absolute;width:88px;height:88px;border-radius:50%;background:#fff0c4;top:18%;right:23%;box-shadow:0 0 56px 20px #ffe9bd88}.card{z-index:1;position:relative;width:min(72%,420px);padding:34px 24px;text-align:center;border:1px solid #fff9;border-radius:20px;background:#fff9;backdrop-filter:blur(10px);box-shadow:0 18px 50px #774c4830;transform:rotate(-2deg)}.spark{font-size:20px;color:#b75b7c}.card h1{font-family:Georgia,serif;font-weight:500;font-size:clamp(34px,6vw,62px);line-height:1.02;letter-spacing:-2px;margin:12px 0 10px;color:#513b4b}.card p{margin:0;color:#795867;font-size:14px}.heart{position:absolute;z-index:2;right:13%;bottom:15%;font-size:47px;filter:drop-shadow(0 6px 8px #623a4b30);transform:rotate(10deg)}
+    .actions{display:flex;align-items:center;padding:10px 13px 2px;gap:15px}.actions button{border:0;background:none;padding:3px 0;font-size:25px;line-height:1}.actions button:hover{opacity:.65}.actions .save{margin-left:auto}.likes,.caption,.comments,.date{padding:0 14px}.likes{font-weight:700;margin-top:5px}.caption{margin-top:5px}.caption strong{margin-right:5px}.comments{color:var(--muted);margin-top:5px}.date{font-size:10px;color:var(--muted);letter-spacing:.45px;margin:8px 0 14px;text-transform:uppercase}.commentbox{border-top:1px solid var(--line);height:46px;padding:0 14px;display:flex;align-items:center;gap:12px}.commentbox input{border:0;outline:0;flex:1;font:inherit}.commentbox button{border:0;background:none;color:#66b5e9;font-weight:700}
+    .right{padding-top:46px}.profile{display:flex;align-items:center;gap:12px;margin:0 0 28px}.profile .userpic{width:46px;height:46px}.profile .identity{font-size:12px}.profile .identity span{color:var(--muted)}.link{border:0;background:none;color:#3897f0;font-size:11px;font-weight:700}.section-title{display:flex;justify-content:space-between;color:var(--muted);font-weight:600;margin-bottom:14px}.section-title button{border:0;background:none;font-weight:700;font-size:11px}.suggestion{display:flex;align-items:center;gap:10px;margin:0 0 13px}.suggestion .userpic{width:34px;height:34px;font-size:12px}.suggestion .identity{font-size:12px}.suggestion .identity span{display:block;color:var(--muted);font-size:11px}.footer{color:#c0bdb7;font-size:11px;line-height:1.9;margin-top:28px}.footer a:hover{text-decoration:underline}
+    @media(max-width:1050px){.shell{grid-template-columns:76px minmax(0,620px);justify-content:center;gap:24px}.sidebar{align-items:center;padding-right:12px}.brand{font-size:0;margin:12px 0 34px}.brand:first-letter{font-size:28px}.nav a{width:48px;justify-content:center}.nav a span:not(.avatar-mini){display:none}.right{display:none}}
+    @media(max-width:650px){body{background:#fff}.shell{display:block;padding:0}.sidebar{position:fixed;z-index:5;top:auto;bottom:0;height:54px;width:100%;background:#fff;border:0;border-top:1px solid var(--line);padding:0 12px;display:block}.brand,.nav a span:not(.avatar-mini),.nav a:nth-child(2),.nav a:nth-child(4),.nav a:nth-child(5),.nav a:nth-child(6),.more{display:none}.nav{height:100%;display:flex;align-items:center;justify-content:space-around}.nav a{height:48px;width:auto;padding:0}.nav a:nth-child(1),.nav a:nth-child(3),.nav a:nth-child(7){display:flex}.nav .avatar-mini{width:25px;height:25px}main{padding:10px 0 64px}.stories{border-bottom:1px solid var(--line);padding:3px 12px 12px;margin-bottom:0;gap:13px}.post{border:0;border-radius:0;margin-bottom:18px}.post-head{height:57px}.art{aspect-ratio:1/1}.card{padding:28px 16px}.heart{font-size:38px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#">Instagram</a>
+      <nav class="nav">
+        <a class="active" href="#" aria-label="Home"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+        <a href="#" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16 16 5 5"/></svg><span>Search</span></a>
+        <a href="#" aria-label="Explore"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="m14.5 9.5-2 5-5 2 2-5z"/></svg><span>Explore</span></a>
+        <a href="#" aria-label="Reels"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="m9 4 4 6m2-6 4 6M3 10h18m-11 3 5 3-5 3z"/></svg><span>Reels</span></a>
+        <a href="#" aria-label="Messages"><svg viewBox="0 0 24 24"><path d="m21 3-7.2 18-3.9-7.9L2 9.2zM21 3 9.9 13.1"/></svg><span>Messages</span></a>
+        <a href="#" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-8 12a2 2 0 0 0 4 0"/></svg><span>Notifications</span></a>
+        <a href="#" aria-label="Profile"><span class="avatar-mini">J</span><span>Profile</span></a>
+      </nav>
+      <nav class="nav more"><a href="#" aria-label="More"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>More</span></a></nav>
+    </aside>
+    <main>
+      <section class="stories" aria-label="Stories">
+        <div class="story"><div class="ring"><div class="initial s1">M</div></div>mira.jpg</div>
+        <div class="story"><div class="ring"><div class="initial s2">A</div></div>alex.days</div>
+        <div class="story"><div class="ring"><div class="initial s3">S</div></div>studio.sunday</div>
+        <div class="story"><div class="ring"><div class="initial s4">L</div></div>lena.draws</div>
+        <div class="story"><div class="ring"><div class="initial s5">N</div></div>noahoutside</div>
+        <div class="story"><div class="ring"><div class="initial" style="background:linear-gradient(135deg,#d4a98b,#625b70)">R</div></div>rowan.jpg</div>
+      </section>
+      <article class="post">
+        <header class="post-head"><div class="userpic">J</div><div class="identity"><strong>just.a.little.hello</strong> <span class="verified">●</span><div class="location">A bright little corner of the internet</div></div><span class="dots" aria-label="More options">···</span></header>
+        <div class="art" role="img" aria-label="A dreamy sunset illustration with a Hello World greeting"><div class="sun"></div><div class="card"><div class="spark">✳ &nbsp; ✦ &nbsp; ✳</div><h1>Hello,<br>world.</h1><p>So glad you’re here ✨</p></div><div class="heart">♡</div></div>
+        <div class="actions"><button aria-label="Like" onclick="this.textContent=this.textContent==='♡'?'♥':'♡';this.style.color=this.textContent==='♥'?'#e84b63':''">♡</button><button aria-label="Comment">▱</button><button aria-label="Share">➤</button><button class="save" aria-label="Save" onclick="this.textContent=this.textContent==='♧'?'♨':'♧'">♧</button></div>
+        <div class="likes">1,024 likes</div>
+        <div class="caption"><strong>just.a.little.hello</strong> New beginnings, soft colors, and a little hello to the world. 🌷</div>
+        <div class="comments">View all 28 comments</div>
+        <div class="date">2 hours ago</div>
+        <div class="commentbox"><span>☺</span><input aria-label="Add a comment" placeholder="Add a comment…"><button>Post</button></div>
+      </article>
+    </main>
+    <aside class="right">
+      <div class="profile"><div class="userpic">J</div><div class="identity"><strong>just.a.little.hello</strong><br><span>Just saying hi 👋</span></div><button class="link">Switch</button></div>
+      <div class="section-title"><span>Suggested for you</span><button>See All</button></div>
+      <div class="suggestion"><div class="userpic" style="background:linear-gradient(135deg,#f1b1a2,#775b91)">M</div><div class="identity"><strong>mornings.with.mia</strong><span>Followed by lena.draws</span></div><button class="link">Follow</button></div>
+      <div class="suggestion"><div class="userpic" style="background:linear-gradient(135deg,#b4c7a1,#5e7f77)">C</div><div class="identity"><strong>coffeeandclouds</strong><span>Suggested for you</span></div><button class="link">Follow</button></div>
+      <div class="suggestion"><div class="userpic" style="background:linear-gradient(135deg,#e6ac75,#b95d70)">P</div><div class="identity"><strong>petals.and.pages</strong><span>Followed by mira.jpg</span></div><button class="link">Follow</button></div>
+      <div class="footer">About · Help · Press · API · Jobs · Privacy · Terms<br>Locations · Language · Meta Verified<br><br>© 2026 INSTAGRAM FROM META</div>
+    </aside>
+  </div>
+</body>
+</html>

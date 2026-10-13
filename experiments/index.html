@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fa">
+  <meta name="description" content="Schoolnet creates technology-enabled learning experiences for schools, teachers, and students.">
+  <title>Schoolnet | Learning for Life</title>
+  <style>
+    :root {
+      --green: #08a653;
+      --green-dark: #078744;
+      --blue: #087bd1;
+      --ink: #202124;
+      --muted: #68717b;
+      --canvas: #f8f9fa;
+      --line: #e6ebee;
+      --mint: #effbf6;
+      --cream: #fffaf0;
+      --content: 1510px;
+      font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--canvas);
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-width: 320px; }
+    a { color: inherit; }
+    button { font: inherit; }
+    .wrap { width: min(calc(100% - 64px), var(--content)); margin-inline: auto; }
+
+    .site-header { background: #fff; }
+    .header-inner { min-height: 112px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .brand { display: inline-flex; flex-direction: column; color: var(--ink); text-decoration: none; flex: 0 0 auto; }
+    .brand-name { font: 36px/1 Georgia, "Times New Roman", serif; letter-spacing: -.7px; }
+    .brand-name .o { position: relative; color: #111; }
+    .brand-name .o::after { content: ""; position: absolute; width: 15px; height: 15px; border-radius: 50%; background: linear-gradient(135deg,#f7c36d,#e87655); left: 50%; top: 4px; transform: translateX(-50%); opacity: .95; }
+    .tagline { margin-top: 7px; font-size: 11px; letter-spacing: 5px; white-space: nowrap; }
+    .nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 34px); }
+    .nav a { color: #62676c; text-decoration: none; font-size: 15px; white-space: nowrap; transition: color .2s; }
+    .nav a:hover { color: var(--green); }
+    .button { display: inline-flex; justify-content: center; align-items: center; min-height: 46px; padding: 0 22px; border: 0; border-radius: 7px; background: var(--green); color: #fff; text-decoration: none; font-size: 15px; font-weight: 750; transition: background .2s, transform .2s; }
+    .button:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .button:focus-visible, a:focus-visible { outline: 3px solid #72d69e; outline-offset: 3px; }
+    .button.small { min-height: 40px; padding-inline: 17px; font-size: 14px; }
+    .menu-toggle { display: none; border: 1px solid var(--line); border-radius: 8px; background: white; padding: 9px 12px; color: var(--ink); }
+    .ticker { overflow: hidden; background: var(--blue); color: white; }
+    .ticker-inner { min-height: 39px; display: flex; align-items: center; justify-content: center; padding-inline: 18px; text-align: center; font-size: 13px; }
+    .ticker strong { margin-left: 8px; padding: 3px 9px; border-radius: 4px; background: #fff; color: var(--blue); font-size: 11px; }
+
+    .hero { padding: 70px 0 62px; background: var(--canvas); }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(44px, 7vw, 110px); }
+    .eyebrow { margin: 0 0 15px; color: var(--green); text-transform: uppercase; letter-spacing: 2px; font-weight: 750; font-size: 12px; }
+    h1,h2,h3,p { margin-top: 0; }
+    h1 { max-width: 810px; margin-bottom: 26px; font-size: clamp(42px, 5.2vw, 76px); line-height: 1.06; letter-spacing: -.055em; font-weight: 800; }
+    h1 em { color: var(--green); font-style: normal; }
+    .hero-copy { max-width: 740px; margin-bottom: 26px; color: #303941; font-size: clamp(17px, 1.55vw, 23px); line-height: 1.65; }
+    .hero-action { min-height: 54px; padding-inline: 30px; font-size: 18px; }
+    .impact-title { margin: 29px 0 20px; font-size: 17px; font-weight: 750; }
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); max-width: 700px; }
+    .stat { padding: 3px 20px; border-left: 1px solid #bad9f2; }
+    .stat:first-child { padding-left: 0; border-left: 0; }
+    .stat b { display: block; color: var(--blue); font-size: clamp(22px,2.3vw,32px); line-height: 1.1; }
+    .stat span { color: #78828b; font-size: 13px; }
+
+    .hero-art { position: relative; min-height: 480px; display: grid; place-items: center; isolation: isolate; }
+    .hero-orb { position: absolute; z-index: -1; width: min(85%,440px); aspect-ratio: 1; border-radius: 50%; background: var(--green); right: 4%; top: 8%; }
+    .hero-photo { position: relative; width: 100%; max-width: 620px; aspect-ratio: 1.08 / 1; overflow: hidden; border-radius: 18px; background: linear-gradient(155deg,#d9e7e6,#bdc8a6 46%,#697b67); box-shadow: 0 22px 55px #182a2925; }
+    .classroom { position: absolute; inset: 0; background: linear-gradient(90deg,#24343c 0 8%,transparent 8% 92%,#25363d 92%), linear-gradient(#faf2d9 0 10%,#d8e8df 10% 74%,#86745e 74%); }
+    .window { position: absolute; top: 18%; width: 24%; height: 43%; border: 9px solid #39464a; background: linear-gradient(120deg,#aad3b5,#e5e9bd); }
+    .window.left { left: 12%; }.window.right { right: 12%; }
+    .board { position: absolute; top: 15%; left: 31%; width: 39%; height: 43%; border: 9px solid #363e42; border-radius: 4px; background: linear-gradient(135deg,#d5e8a1,#b1d16c); display: grid; place-items: center; color: #315635; text-align: center; font-weight: 800; font-size: clamp(12px,1.3vw,18px); padding: 14px; }
+    .board small { display: block; margin-top: 6px; font-size: 10px; font-weight: 600; }
+    .teacher { position: absolute; left: 51%; bottom: 14%; width: 18%; height: 43%; border-radius: 45% 45% 12% 12%; background: linear-gradient(90deg,#263e4e,#324b5c 48%,#202e3b); }
+    .teacher::before { content: ""; position: absolute; width: 45%; aspect-ratio: 1; left: 28%; top: -17%; border-radius: 50%; background: #a8795e; box-shadow: 0 -8px 0 1px #29241f; }
+    .desk { position: absolute; bottom: 9%; height: 15%; background: #93734f; border-top: 8px solid #d3ad72; }
+    .desk.one { left: 3%; width: 46%; transform: skewY(5deg); }.desk.two { right: -2%; width: 45%; transform: skewY(-6deg); }
+    .student { position: absolute; bottom: 7%; width: 18%; height: 22%; border-radius: 45% 45% 4% 4%; background: #43545b; }
+    .student::before { content: ""; position: absolute; top: -35%; left: 25%; width: 48%; aspect-ratio: 1; border-radius: 50%; background: #694d3d; }
+    .student.a { left: 20%; }.student.b { right: 10%; background:#5b5350; }
+    .hero-note { position: absolute; bottom: 1%; right: 0; padding: 13px 17px; border: 1px solid #e7ece9; border-radius: 10px; background: white; box-shadow: 0 8px 30px #172d2118; color: #46534b; font-size: 12px; font-weight: 700; }
+    .hero-note b { color: var(--green); }
+
+    .section { padding: 78px 0; background: #fff; }
+    .section.mint { background: var(--mint); }
+    .section.cream { background: var(--cream); }
+    .section-head { max-width: 760px; margin: 0 auto 42px; text-align: center; }
+    .section-head h2 { margin-bottom: 12px; font-size: clamp(28px,3.3vw,42px); line-height: 1.15; letter-spacing: -.04em; font-weight: 800; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.65; }
+    .feature-list { display: grid; gap: 50px; }
+    .feature { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px,8vw,110px); align-items: center; min-height: 290px; }
+    .feature:nth-child(even) .feature-copy { order: 2; }.feature:nth-child(even) .feature-visual { order: 1; }
+    .feature-copy { max-width: 520px; }.feature-copy h3 { margin-bottom: 12px; font-size: clamp(25px,3vw,34px); letter-spacing: -.035em; }.feature-copy p { color: var(--muted); line-height: 1.7; margin-bottom: 19px; }
+    .feature-visual { min-height: 270px; position: relative; display: grid; place-items: center; }
+    .feature-visual::before { content:""; position:absolute; width:250px; aspect-ratio:1; border-radius:50%; background:#e7f8ee; z-index:0; }
+    .mockup { z-index:1; width:min(88%,440px); min-height:235px; padding:18px; border:1px solid #dce3e5; border-radius:17px; background:#fff; box-shadow:0 18px 38px #17352718; }
+    .mock-top { display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid #edf0f1; color:#4e5a62; font-size:12px; font-weight:700; }
+    .mock-pill { padding:5px 9px; border-radius:12px; background:#e8f8ef; color:var(--green); font-size:10px; }
+    .lesson { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:13px; }
+    .lesson-card { min-height:72px; padding:12px; border-radius:9px; background:#f3f7f8; color:#53616b; font-size:11px; }.lesson-card b { display:block; margin:5px 0; color:#26343b; font-size:13px; }
+    .lesson-card.green { background:#effbf5; }.lesson-card.yellow { background:#fff7db; }
+    .phone { z-index:1; width:178px; height:310px; border:8px solid #202b31; border-radius:28px; background:white; box-shadow:0 20px 40px #172d2130; padding:18px 11px; }
+    .phone-head { font-size:10px; font-weight:800; margin-bottom:14px; }.phone-score { padding:13px; border-radius:12px; background:#e8f6ed; color:var(--green-dark); font-size:11px; }.phone-score b { display:block; font-size:24px; }
+    .phone-row { height:36px; margin-top:8px; padding:10px; border-radius:8px; background:#f2f5f6; font-size:10px; color:#64727b; }
+    .projector { z-index:1; width:min(82%,390px); aspect-ratio:1.4; display:grid; place-items:center; border-radius:12px; background:linear-gradient(145deg,#242a2f,#0d1114); box-shadow:0 22px 35px #0003; transform:perspective(600px) rotateY(-8deg); }
+    .projector-screen { width:78%; height:56%; display:grid; place-items:center; border:6px solid #131719; border-radius:4px; background:linear-gradient(135deg,#263b52,#1a9a90); color:white; text-align:center; font-size:16px; font-weight:800; }.projector-screen span { display:block; color:#d8ef77; font-size:10px; font-weight:600; }
+    .trusted-row { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; align-items:stretch; }
+    .partner { min-height:90px; display:grid; place-items:center; padding:12px; border:1px solid #dce7e4; border-radius:10px; background:#fff; color:#46534b; font-size:clamp(15px,2vw,22px); font-weight:800; text-align:center; box-shadow:0 5px 16px #16432b08; }
+    .partner:nth-child(2){color:#3d9971}.partner:nth-child(3){color:#1265a0}.partner:nth-child(4){color:#1594b9}.partner:nth-child(5){color:#b48728}
+    .cta-center { margin-top:30px; text-align:center; }.cta-center p { margin-bottom:14px; font-weight:700; }
+    .global-grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:36px; align-items:center; }
+    .class-photo { min-height:315px; border-radius:15px; overflow:hidden; position:relative; background:linear-gradient(#9fc2d2 0 48%,#647f56 48% 58%,#573d2e 58%); }
+    .class-photo::before { content:""; position:absolute; inset:16% 8% 10%; background:repeating-linear-gradient(90deg,#344b55 0 9%,transparent 9% 12%),linear-gradient(#e7cfaa 0 10%,#b9cbaf 10% 70%,#72573e 70%); border:8px solid #39494d; border-bottom-width:20px; box-shadow:0 20px 36px #102c3450; }
+    .class-photo::after { content:"LEARNING\A TOGETHER"; white-space:pre; position:absolute; top:28%; left:33%; color:#416c4c; font-weight:800; font-size:20px; text-align:center; line-height:1.5; }
+    .map-card { min-height:315px; border:1px solid #e3e8e8; border-radius:15px; background:#fff; display:grid; place-items:center; overflow:hidden; }
+    .map { width:90%; height:auto; }
+    .content-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+    .content-card { min-height:210px; position:relative; overflow:hidden; border:1px solid #e5ebed; border-radius:12px; background:#fff; box-shadow:0 8px 22px #23342a0d; }
+    .content-art { height:125px; display:grid; place-items:center; background:linear-gradient(140deg,#dceff5,#abcec1); color:#39795d; font-size:38px; font-weight:800; }
+    .content-card:nth-child(2) .content-art { background:linear-gradient(140deg,#fff0bf,#f1c46f); color:#a4771f; }
+    .content-card:nth-child(3) .content-art { background:linear-gradient(140deg,#dfe5fa,#a9b9e0); color:#4b5e9e; }
+    .content-body { padding:14px 16px; }.content-body b { display:block; margin-bottom:5px; }.content-body span { color:var(--muted); font-size:12px; }
+    .quote { max-width:790px; margin:auto; display:grid; grid-template-columns:76px 1fr; gap:24px; align-items:center; }
+    .quote-avatar { width:76px; aspect-ratio:1; display:grid; place-items:center; border-radius:50%; background:linear-gradient(135deg,#d7c2a3,#748c85); color:white; font-size:28px; font-weight:800; }
+    blockquote { margin:0; color:#46515a; font-size:18px; line-height:1.7; }.quote cite { display:block; margin-top:14px; color:var(--green-dark); font-style:normal; font-size:14px; font-weight:750; }
+    .site-footer { padding:48px 0 24px; background:#fff; border-top:1px solid #edf0f1; }
+    .footer-grid { display:grid; grid-template-columns:1.2fr 1fr 1fr 1.2fr; gap:28px; }
+    .footer-grid h3 { margin:0 0 15px; font-size:14px; }.footer-grid p,.footer-grid a { color:var(--muted); font-size:13px; line-height:1.8; }.footer-grid a { display:block; text-decoration:none; }.footer-grid a:hover { color:var(--green); }
+    .copyright { margin-top:32px; padding-top:17px; border-top:1px solid #edf0f1; color:#92999e; text-align:center; font-size:11px; }
+
+    @media (max-width: 1050px) {
+      .wrap { width:min(calc(100% - 44px),var(--content)); }
+      .header-inner { min-height:92px; }.brand-name { font-size:31px; }.tagline { font-size:9px; letter-spacing:4px; }
+      .nav { gap:15px; }.nav a { font-size:13px; }.nav .button { padding-inline:14px; }
+      .hero { padding-top:54px; }.hero-art { min-height:390px; }.feature { gap:34px; }
+    }
+    @media (max-width: 760px) {
+      .wrap { width:min(calc(100% - 36px),var(--content)); }
+      .header-inner { min-height:76px; }.brand-name { font-size:27px; }.tagline { margin-top:5px; font-size:8px; letter-spacing:3.7px; }
+      .menu-toggle { display:block; }.nav { display:none; position:absolute; z-index:5; top:76px; left:0; right:0; padding:15px 20px 20px; background:white; border-top:1px solid var(--line); box-shadow:0 12px 20px #15261b15; flex-direction:column; align-items:stretch; }
+      .nav.open { display:flex; }.nav a { padding:8px 4px; }.nav .button { align-self:flex-start; margin-top:4px; }
+      .ticker-inner { min-height:35px; font-size:11px; }.ticker strong { font-size:9px; }
+      .hero { padding:44px 0 48px; }.hero-grid { grid-template-columns:1fr; gap:24px; }.hero h1 { max-width:610px; font-size:clamp(39px,10vw,64px); }.hero-copy { font-size:17px; }
+      .hero-art { min-height:clamp(270px,75vw,440px); }.hero-orb { width:78%; right:9%; }.hero-photo { width:90%; }
+      .section { padding:58px 0; }.section-head { margin-bottom:30px; }.feature { grid-template-columns:1fr; gap:10px; }.feature:nth-child(even) .feature-copy,.feature:nth-child(even) .feature-visual { order:initial; }.feature-copy { max-width:unset; }.feature-visual { min-height:245px; }
+      .trusted-row { grid-template-columns:repeat(2,1fr); }.partner:last-child { grid-column:1/-1; }
+      .global-grid { grid-template-columns:1fr; }.class-photo,.map-card { min-height:260px; }.content-grid { grid-template-columns:1fr; }.content-card { min-height:190px; }
+      .footer-grid { grid-template-columns:1fr 1fr; }.footer-grid > :first-child { grid-column:1/-1; }
+    }
+    @media (max-width: 430px) {
+      .wrap { width:calc(100% - 30px); }.hero { padding-top:35px; }.stats { gap:0; }.stat { padding-inline:10px; }.stat b { font-size:21px; }.stat span { font-size:10px; }
+      .hero-note { right:-2%; font-size:10px; }.quote { grid-template-columns:1fr; text-align:center; }.quote-avatar { margin:auto; }.footer-grid { gap:18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none!important; animation:none!important; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#home" aria-label="Schoolnet, Learning for Life">
+        <span class="brand-name">SCH<span class="o">O</span>OLNET</span>
+        <span class="tagline">LEARNING FOR LIFE</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a href="#geneo">Geneo AI Apps</a><a href="#lms">LMS</a><a href="#classrooms">Smart Classrooms</a><a href="#about">About Us</a><a href="#news">More</a><a class="button small" href="#partner">Partner With Us</a>
+      </nav>
+    </div>
+  </header>
+  <div class="ticker"><div class="ticker-inner">Schoolnet recognized for transforming learning across India <strong>READ MORE</strong></div></div>
+
+  <main id="home">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Learning for life</p>
+          <h1>Your World Class Education Partner in <em>Smart Classroom Solutions</em></h1>
+          <p class="hero-copy">Schoolnet provides transformative education solutions through technology-enabled classrooms, AI-led learning, teaching and school management solutions.</p>
+          <a class="button hero-action" href="#partner">Partner With Us</a>
+          <p class="impact-title">25+ Years of Impact at Scale With</p>
+          <div class="stats" aria-label="Schoolnet impact">
+            <div class="stat"><b>100,000</b><span>Schools</span></div>
+            <div class="stat"><b>25 million</b><span>Teachers &amp; Students</span></div>
+            <div class="stat"><b>30</b><span>States &amp; UTs in India</span></div>
+          </div>
+        </div>
+        <div class="hero-art" role="img" aria-label="Illustration of a teacher leading a lesson in a connected classroom">
+          <div class="hero-orb"></div>
+          <div class="hero-photo"><div class="classroom"><div class="window left"></div><div class="window right"></div><div class="board">Explore. Learn.<small>Interactive classroom lesson</small></div><div class="teacher"></div><div class="desk one"></div><div class="desk two"></div><div class="student a"></div><div class="student b"></div></div></div>
+          <div class="hero-note"><b>25+ years</b> making learning accessible</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">What we do</p><h2>Bringing Edtech Innovation to K–12 Schools and Students</h2><p>Practical technology and learning experiences that help every school create new possibilities for its students.</p></div>
+        <div class="feature-list">
+          <article class="feature" id="geneo">
+            <div class="feature-copy"><p class="eyebrow">AI-powered learning</p><h3>Geneo AI Apps</h3><p>School and after-school solutions with AI-enabled apps for teachers and students. Make learning personal, engaging, and easier to explore.</p><a class="button small" href="#partner">Learn More</a></div>
+            <div class="feature-visual"><div class="mockup"><div class="mock-top"><span>Geneo learning hub</span><span class="mock-pill">Today’s lesson</span></div><div class="lesson"><div class="lesson-card green">For your class<b>Explore science</b>Interactive lesson</div><div class="lesson-card yellow">Practice<b>Quick quiz</b>5 questions</div><div class="lesson-card">My progress<b>Great work!</b>Keep learning</div><div class="lesson-card">Teacher tools<b>Class insights</b>See progress</div></div></div></div>
+          </article>
+          <article class="feature" id="lms">
+            <div class="feature-copy"><p class="eyebrow">Connected school management</p><h3>Centralized LMS</h3><p>Transform state-wide education through centralized learning management. Bring content, classrooms, and progress together in one place.</p><a class="button small" href="#partner">Learn More</a></div>
+            <div class="feature-visual"><div class="phone"><div class="phone-head">My Learning</div><div class="phone-score">Learning streak<b>268</b>days of curiosity</div><div class="phone-row">Mathematics · 4 lessons</div><div class="phone-row">Science · 2 activities</div><div class="phone-row">Language · 3 lessons</div><div class="phone-row">My classroom · Open</div></div></div>
+          </article>
+          <article class="feature" id="classrooms">
+            <div class="feature-copy"><p class="eyebrow">Teaching made vivid</p><h3>Smart Classrooms</h3><p>Digital solutions for classrooms with interactive offline content to make learning faster, smarter, and more engaging.</p><a class="button small" href="#partner">Learn More</a></div>
+            <div class="feature-visual"><div class="projector"><div class="projector-screen">A world of ideas<span>See it. Explore it. Understand it.</span></div></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section mint" id="partner">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Working together</p><h2>Our Trusted Partners</h2><p>Joining hands with education leaders to bring quality learning to every classroom.</p></div>
+        <div class="trusted-row" aria-label="Partner organizations"><div class="partner">Yuva Unstoppable</div><div class="partner">Seeds of Impact</div><div class="partner">EdCIL India</div><div class="partner">CENTUM Foundation</div><div class="partner">Learning Partners</div></div>
+        <div class="cta-center"><p>Ready to bridge the digital divide in your classrooms?</p><a class="button small" href="mailto:partnerships@schoolnetindia.com">Partner With Us</a></div>
+      </div>
+    </section>
+
+    <section class="section" id="impact">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Learning without limits</p><h2>Our Global Footprint</h2><p>Bringing high-quality Indian education experiences to learners around the world.</p></div>
+        <div class="global-grid">
+          <div class="class-photo" role="img" aria-label="Illustration of students learning together in a classroom"></div>
+          <div class="map-card" role="img" aria-label="Stylized world map showing Schoolnet's global reach">
+            <svg class="map" viewBox="0 0 680 330" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g fill="#dce5e9">
+                <path d="m73 83 38-32 57-9 42 23 3 28-24 15-5 27-22 12-8 38-25 10-16-30-26-14-14-34-24-5-9-29z"/><path d="m183 190 30 12 18 39-9 43-21 32-16-16 5-34-19-27 12-49z"/><path d="m272 76 40-17 40 10 20 22-11 18-32 2-16 25-22-4-13-24-22-8 16-24z"/><path d="m341 142 34-12 33 21 19 49-22 50-31 33-22-18-7-43-21-21 6-34-20-18 31-7z"/><path d="m387 79 50-28 65 7 29 21 46 5 28 31-16 23-45-4-25 18-43-12-29 23-35-9-22-36-29-7 6-32z"/><path d="m526 199 40-14 33 18 10 37-27 22-46-7-21-28 11-28z"/>
+              </g>
+              <g fill="#f1cdd3"><circle cx="134" cy="126" r="6"/><circle cx="153" cy="105" r="5"/><circle cx="178" cy="153" r="6"/><circle cx="200" cy="238" r="7"/><circle cx="215" cy="259" r="5"/></g>
+              <g fill="#83c9ae"><circle cx="374" cy="147" r="6"/><circle cx="400" cy="176" r="7"/><circle cx="424" cy="160" r="5"/><circle cx="443" cy="132" r="6"/><circle cx="472" cy="104" r="5"/><circle cx="496" cy="121" r="6"/><circle cx="527" cy="133" r="6"/><circle cx="567" cy="110" r="5"/></g>
+              <g fill="#f1d88a"><circle cx="410" cy="89" r="5"/><circle cx="344" cy="108" r="5"/><circle cx="586" cy="229" r="6"/><circle cx="570" cy="248" r="5"/></g>
+              <g stroke="#08a653" stroke-width="2" stroke-dasharray="5 7" fill="none" opacity=".6"><path d="M210 112 Q310 40 400 160"/><path d="M400 160 Q470 65 550 125"/><path d="M400 160 Q280 236 205 240"/></g>
+              <circle cx="400" cy="160" r="10" fill="#08a653"/><circle cx="400" cy="160" r="18" fill="#08a653" opacity=".18"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cream" id="news">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Ideas for every learner</p><h2>Content that Connects</h2><p>Curriculum-aligned learning resources that connect classroom concepts with the world around us.</p></div>
+        <div class="content-grid">
+          <article class="content-card"><div class="content-art" aria-hidden="true">◎</div><div class="content-body"><b>Real-World Examples</b><span>Connect curriculum to everyday life.</span></div></article>
+          <article class="content-card"><div class="content-art" aria-hidden="true">✎</div><div class="content-body"><b>Digitized Assessments</b><span>See progress and guide next steps.</span></div></article>
+          <article class="content-card"><div class="content-art" aria-hidden="true">◉</div><div class="content-body"><b>Interactive Explorations</b><span>Make room for curiosity and discovery.</span></div></article>
+        </div>
+        <div class="cta-center"><p>Want to make learning fun and engaging again?</p><a class="button small" href="#partner">Let’s Partner</a></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">From our community</p><h2>See What Our Trusted Partners Have to Say</h2></div>
+        <figure class="quote"><div class="quote-avatar" aria-hidden="true">P</div><blockquote>“Our conventional classrooms were transformed into smart classrooms. Teachers have seen tremendous change in their students — they pay attention, ask questions, and take initiative in learning.”<cite>Parmananda Panging · Principal, Digital Learning School</cite></blockquote></figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div><a class="brand" href="#home"><span class="brand-name">SCH<span class="o">O</span>OLNET</span><span class="tagline">LEARNING FOR LIFE</span></a><p style="margin-top:16px">Making quality education more accessible through learning, technology, and partnership.</p></div>
+        <div><h3>Quick Links</h3><a href="#geneo">Geneo AI Apps</a><a href="#lms">LMS</a><a href="#classrooms">Smart Classrooms</a><a href="#impact">About Us</a></div>
+        <div><h3>Other Links</h3><a href="#partner">Partner With Us</a><a href="#news">Resources</a><a href="#news">News</a><a href="#home">Privacy Policy</a></div>
+        <div><h3>Get in Touch</h3><p>For partnerships and school enquiries, contact our team.</p><a href="mailto:partnerships@schoolnetindia.com">partnerships@schoolnetindia.com</a></div>
+      </div>
+      <div class="copyright">© 2026 Schoolnet India Ltd. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const navigation = document.querySelector('#main-nav');
+    menuButton.addEventListener('click', () => {
+      const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', String(!isOpen));
+      navigation.classList.toggle('open', !isOpen);
+    });
+    navigation.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        menuButton.setAttribute('aria-expanded', 'false');
+        navigation.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>

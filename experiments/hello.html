@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#00a65a">
+  <title>Hello World | Schoolnet</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+      color: #242a32;
+      background: #f7faf9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar {
+      height: 5px;
+      background: #0875c9;
+    }
+
+    header, footer {
+      width: min(100% - 40px, 1080px);
+      margin-inline: auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 20px;
+    }
+
+    .brand {
+      color: #27313a;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .brand span { color: #00a65a; }
+
+    .nav-label {
+      color: #68727d;
+      font-size: 13px;
+    }
+
+    main {
+      display: grid;
+      place-items: center;
+      padding: 48px 20px;
+    }
+
+    .welcome {
+      width: min(100%, 680px);
+      padding: clamp(32px, 7vw, 68px);
+      border: 1px solid #e7efeb;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 14px 40px rgb(31 65 49 / 7%);
+      text-align: center;
+    }
+
+    .welcome-mark {
+      display: grid;
+      width: 68px;
+      aspect-ratio: 1;
+      place-items: center;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: #e8f8ef;
+      color: #00a65a;
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 7vw, 52px);
+      line-height: 1.12;
+      letter-spacing: -.04em;
+    }
+
+    h1 span { color: #00a65a; }
+
+    p {
+      max-width: 440px;
+      margin: 18px auto 28px;
+      color: #64717c;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 7px;
+      background: #00a65a;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button:hover { background: #008d4c; }
+    .button:focus-visible { outline: 3px solid #83d6aa; outline-offset: 3px; }
+
+    footer {
+      padding-block: 18px;
+      border-top: 1px solid #e8eeeb;
+      color: #7b858d;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      header, footer { width: min(100% - 28px, 1080px); }
+      header { padding-block: 16px; }
+      .nav-label { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" aria-hidden="true"></div>
+  <header>
+    <div class="brand">SCHOOL<span>NET</span></div>
+    <div class="nav-label">Learning for life</div>
+  </header>
+  <main>
+    <section class="welcome" aria-labelledby="welcome-title">
+      <div class="welcome-mark" aria-hidden="true">S</div>
+      <h1 id="welcome-title">Hello, <span>world!</span></h1>
+      <p>Welcome to a brighter way to learn. This simple page is styled with Schoolnet’s fresh green and clean, student-friendly look.</p>
+      <a class="button" href="index.html">Explore more</a>
+    </section>
+  </main>
+  <footer>© Schoolnet · Learning for life</footer>
+</body>
+</html>

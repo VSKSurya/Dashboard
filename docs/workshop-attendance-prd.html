@@ -1,0 +1,100 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Product requirements for a workshop student attendance application.">
+<title>Workshop Attendance App | Product Requirements</title>
+<style>
+:root{--bg:#000;--surface:#0a0a0a;--surface2:#111;--border:#262626;--bright:#3a3a3a;--text:#f2f2f2;--dim:#b4b4b4;--faint:#8f8f8f;--mono:"SF Mono","JetBrains Mono","Fira Code",ui-monospace,Menlo,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.7 var(--sans);-webkit-font-smoothing:antialiased}.wrap{max-width:960px;margin:auto;padding:72px 30px 110px}h1{font-size:40px;line-height:1.12;font-weight:600;letter-spacing:-.02em;margin:0 0 22px;background:linear-gradient(180deg,#fff,#9a9a9a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.eyebrow,.meta,.tag,.toc,.walk-nav,.wn-num,.footer,.table-label{font:12px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}.eyebrow{letter-spacing:.28em;margin-bottom:18px}.meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}.meta span{border:1px solid var(--border);padding:5px 10px;border-radius:5px}.lede{font-size:20px;line-height:1.6;color:#dadada;border-left:2px solid #777;padding:4px 0 4px 18px;margin:0 0 48px}.toc{position:fixed;left:28px;top:50%;transform:translateY(-50%);width:210px;display:none;letter-spacing:.04em}.toc a{display:block;padding:7px 0;color:var(--faint);border:0;text-decoration:none;font-size:11px}.toc a.active{color:#fff}.toc a span{margin-right:8px}section{margin:0 0 62px;scroll-margin-top:30px}h2{font:600 13px/1.4 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin:0 0 26px;padding-bottom:14px;border-bottom:1px solid var(--border)}h2 .num{color:#fff;margin-right:10px}h3{font-size:20px;line-height:1.35;font-weight:600;letter-spacing:-.01em;margin:28px 0 10px}p,li,td{color:#eaeaea;font-size:17px}p{margin:0 0 14px}ul,ol{padding-left:22px;margin:10px 0 18px}li{padding:3px 0}.callout{border:1px solid var(--bright);border-left:3px solid #6a6a6a;border-radius:9px;background:var(--surface);padding:18px 22px;margin:20px 0}.tag{margin-bottom:7px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{border:1px solid var(--border);background:var(--surface);padding:16px 18px;border-radius:8px}.card h3{margin:0 0 7px;font-size:18px}.card p{margin:0}.badge{display:inline-block;border:1px solid #555;border-radius:5px;background:#1c1c1c;color:#fff;padding:2px 8px;font:600 11px/1.5 var(--mono);letter-spacing:.05em}.badge.open{border-style:dashed;background:#141414;color:#c9c9c9}table{border-collapse:collapse;width:100%;margin:15px 0 22px}th{font:11px/1.5 var(--mono);letter-spacing:.14em;text-align:left;color:var(--faint);text-transform:uppercase}th,td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:top}.walk{border:1px solid var(--border);border-radius:10px;background:#050505;padding:22px;margin:20px 0}.walk-track{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}.wnode{flex:1 1 120px;min-height:72px;text-align:left;border:1px solid var(--bright);border-radius:7px;background:#101010;color:#eaeaea;padding:12px;cursor:pointer;font:600 15px/1.35 var(--sans)}.wnode .wn-num{display:block;margin-bottom:5px}.wnode.active{background:#242424;border-color:#fff;color:#fff}.walk-detail{margin-top:16px;padding:15px 17px;border:1px solid var(--border);border-radius:7px;background:#0a0a0a}.wd-stage{font:11px/1.5 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:#b4b4b4;margin-bottom:6px}.wd-copy{font-size:17px;color:#eaeaea}.walk-nav{display:flex;align-items:center;gap:12px;margin-top:14px}.walk-nav button{background:#111;border:1px solid #555;border-radius:5px;color:#fff;padding:8px 13px;cursor:pointer;font:12px var(--mono)}.walk-nav button:focus-visible,.wnode:focus-visible,a:focus-visible{outline:2px solid white;outline-offset:3px}.counter{min-width:100px;text-align:center}.footer{text-align:center;border-top:1px solid var(--border);padding-top:20px;margin-top:80px;letter-spacing:.08em}@media(min-width:1400px){body{padding-left:230px}.toc{display:block}}@media(max-width:680px){.wrap{padding:45px 20px 80px}h1{font-size:30px}.lede{font-size:18px}.grid{grid-template-columns:1fr}th,td{padding:9px 7px}p,li,td{font-size:16.5px}}
+</style>
+</head>
+<body>
+<nav class="toc" aria-label="Document sections">
+<a href="#s01"><span>01</span>Overview</a><a href="#s02"><span>02</span>Problem & goals</a><a href="#s03"><span>03</span>Users & scope</a><a href="#s04"><span>04</span>Requirements</a><a href="#s05"><span>05</span>Workflows</a><a href="#s06"><span>06</span>Data & rules</a><a href="#s07"><span>07</span>Success measures</a><a href="#s08"><span>08</span>Open questions</a>
+</nav>
+<main class="wrap">
+<header>
+<div class="eyebrow">Product requirements document</div>
+<h1>Workshop Attendance App</h1>
+<div class="meta"><span>Draft 01</span><span>13 October 2026</span><span>Web app, initial scope</span></div>
+<p class="lede">A practical tool for workshop organizers to maintain student rosters, record who attended each session, track participation time, and produce useful attendance summaries.</p>
+</header>
+<section id="s01"><h2><span class="num">01</span>Overview</h2>
+<p>The app supports the operational attendance needs of student workshops. An administrator maintains the roster and sessions; an instructor records attendance for a specific session and date; authorized users review history, analytics, and downloadable reports.</p>
+<div class="callout"><div class="tag">Product direction</div><p>Make it quick and unambiguous to complete a session’s attendance, while preserving a reliable history that can be searched and reported later.</p></div>
+</section>
+<section id="s02"><h2><span class="num">02</span>Problem and goals</h2>
+<h3>Problem</h3><p>Organizers need a dependable record of which students joined each workshop. Paper lists and scattered spreadsheets make it difficult to keep student records current, identify missing attendance, understand participation patterns, and prepare reports.</p>
+<h3>Goals</h3><ul><li>Manage a current list of workshop students.</li><li>Record present or absent status for each student for each session.</li><li>Make session dates and attendance completion visible in a calendar.</li><li>Capture time spent when the workshop process supports it.</li><li>Summarize and export attendance data for follow-up and reporting.</li></ul>
+</section>
+<section id="s03"><h2><span class="num">03</span>Users and scope</h2>
+<div class="grid"><article class="card"><h3>Administrator</h3><p>Maintains students and workshop sessions, reviews attendance, and creates reports.</p></article><article class="card"><h3>Instructor</h3><p>Opens a session roster, marks attendance, and reviews that session’s saved record.</p></article></div>
+<h3>MVP scope</h3><ul><li>Student roster with add, edit, deactivate, search, and unique student identifier.</li><li>Workshop/session and date selection.</li><li>Attendance states of present, absent, and unmarked.</li><li>Save and revise attendance, with a visible saved/completion state.</li><li>Calendar view of scheduled sessions and attendance completion.</li><li>Student and session attendance history, basic summaries, and CSV export.</li></ul>
+<h3>Later or optional scope</h3><ul><li>Check-in/check-out based time tracking, if the workshop needs precise durations.</li><li>Notifications, student self-service, QR or location check-in, integrations, and complex multi-organization permissions.</li></ul>
+</section>
+<section id="s04"><h2><span class="num">04</span>Functional requirements</h2>
+<table><thead><tr><th>Area</th><th>Requirement</th><th>Priority</th></tr></thead><tbody>
+<tr><td>Students</td><td>List students with name and unique identifier. Add, edit, search, and deactivate a student. Preserve past attendance when a student is deactivated.</td><td><span class="badge">P0</span></td></tr>
+<tr><td>Sessions</td><td>Create and manage workshop sessions with a title, date, and roster association. Open a session from the calendar or session list.</td><td><span class="badge">P0</span></td></tr>
+<tr><td>Attendance</td><td>For each student on the session roster, allow Present, Absent, or Unmarked. Save changes and allow authorized corrections.</td><td><span class="badge">P0</span></td></tr>
+<tr><td>Calendar</td><td>Show scheduled sessions by date and distinguish attendance not started, in progress, and complete.</td><td><span class="badge">P1</span></td></tr>
+<tr><td>Time spent</td><td>Support recording time spent per student and session. Exact capture method is undecided. Missing time data must not invalidate attendance.</td><td><span class="badge open">Open</span></td></tr>
+<tr><td>Analytics</td><td>Summarize sessions held, present and absent counts, attendance rates, and optional duration totals for a selected period.</td><td><span class="badge">P1</span></td></tr>
+<tr><td>Reporting</td><td>Filter by period, student, and workshop/session. Export rows containing student, session date, status, and duration when available.</td><td><span class="badge">P1</span></td></tr>
+</tbody></table>
+<h3>Behavior and usability</h3><ul><li>Unmarked must remain distinct from Absent so incomplete records are not counted as absences.</li><li>Show a clear save confirmation and warn before leaving with unsaved attendance changes.</li><li>Prevent duplicate attendance entries for the same student and session.</li><li>Make roster search and attendance controls usable by keyboard and touch.</li><li>Use clear empty states when no students, sessions, or records exist.</li></ul>
+</section>
+<section id="s05"><h2><span class="num">05</span>Key workflows</h2>
+<h3>Record session attendance</h3>
+<div class="walk" data-walk aria-label="Interactive attendance workflow">
+<div class="walk-track">
+<button class="wnode" data-i="0"><span class="wn-num">Step 01</span>Open a session</button>
+<button class="wnode" data-i="1"><span class="wn-num">Step 02</span>Review the roster</button>
+<button class="wnode" data-i="2"><span class="wn-num">Step 03</span>Mark each student</button>
+<button class="wnode" data-i="3"><span class="wn-num">Step 04</span>Save the record</button>
+<button class="wnode" data-i="4"><span class="wn-num">Step 05</span>Review or report</button>
+</div>
+<div class="walk-detail" aria-live="polite"><div class="wd-stage"></div><div class="wd-copy"></div></div>
+<div class="walk-nav"><button type="button" data-back>Back</button><span class="counter" aria-live="polite"></span><button type="button" data-next>Next</button></div>
+</div>
+<h3>Manage a student</h3><ol><li>Administrator opens the student list and chooses Add student.</li><li>Administrator enters the required identity fields and saves.</li><li>The student appears in the roster for eligible workshop sessions.</li><li>If the student leaves, the administrator deactivates the record; historical attendance remains reportable.</li></ol>
+<h3>Review a report</h3><ol><li>User selects a date range and optional workshop or student filters.</li><li>App displays matching attendance and summary metrics.</li><li>User exports the filtered rows as CSV.</li></ol>
+</section>
+<section id="s06"><h2><span class="num">06</span>Data and business rules</h2>
+<table><thead><tr><th>Record</th><th>Minimum fields</th></tr></thead><tbody><tr><td>Student</td><td>Student ID, name, active status, created/updated timestamps.</td></tr><tr><td>Workshop session</td><td>Session ID, workshop/title, date and optional start/end time, status.</td></tr><tr><td>Attendance</td><td>Student ID, session ID, status, optional duration/check-in data, updated by, updated timestamp.</td></tr></tbody></table>
+<ul><li>One attendance record exists per student per session.</li><li>Only students on that session’s roster are included in its attendance checklist.</li><li>Attendance status is one of Unmarked, Present, or Absent.</li><li>Attendance completion is based on every roster student receiving a final status; unmarked students remain outstanding.</li><li>Student deactivation does not delete attendance history.</li><li>Duration is optional until the time-tracking method and policy are confirmed.</li></ul>
+</section>
+<section id="s07"><h2><span class="num">07</span>Success measures and quality</h2>
+<h3>Product measures</h3><ul><li>Instructors can complete a session’s roster without assistance.</li><li>Attendance records can be located by student, workshop, and date.</li><li>Administrators can export a filtered report successfully.</li><li>Sessions with missing/unmarked entries are visible and distinguishable from complete sessions.</li></ul>
+<h3>Quality requirements</h3><ul><li>Responsive layouts support desktop and tablet use, with touch-friendly controls.</li><li>Use semantic headings, labeled controls, keyboard focus indicators, and readable contrast.</li><li>Protect student information through authenticated access and role-appropriate permissions before production use.</li><li>Keep a reliable change timestamp and user attribution for attendance edits.</li></ul>
+</section>
+<section id="s08"><h2><span class="num">08</span>Open questions and assumptions</h2>
+<table><thead><tr><th>Question</th><th>Working assumption</th></tr></thead><tbody>
+<tr><td>One workshop or several?</td><td>Several workshops/sessions may exist, and students may attend more than one.</td></tr>
+<tr><td>How should time spent be measured?</td><td>Optional until confirmed. Choose between manual duration entry and check-in/check-out timestamps.</td></tr>
+<tr><td>What student details are needed?</td><td>Name and a unique student ID are required. Other fields should be decided based on reporting needs.</td></tr>
+<tr><td>Who can edit saved attendance?</td><td>Admin and instructor can make corrections, with editor and timestamp recorded.</td></tr>
+<tr><td>Which export formats are needed?</td><td>CSV is the initial format. PDF can be considered if printable reports are required.</td></tr>
+<tr><td>Is attendance taken once or multiple times per day?</td><td>Each scheduled session is a distinct attendance event.</td></tr>
+</tbody></table>
+<div class="callout"><div class="tag">Next product decision</div><p>Confirm the time tracking method and the student fields required for reports before treating time tracking as a committed MVP feature.</p></div>
+</section>
+<footer class="footer">workshop-attendance-prd.html · monochrome OLED document</footer>
+</main>
+<script>
+(function(){
+var copy=[
+['Open a session','Instructor selects a scheduled workshop session and date from the calendar or session list.'],
+['Review the roster','The app shows the students expected for that session and the current completion state.'],
+['Mark each student','Instructor sets each student to Present or Absent. Unmarked remains available until a decision is recorded.'],
+['Save the record','The app saves the session attendance, confirms success, and records who made the update and when.'],
+['Review or report','Authorized users can revisit the session, inspect student history, or include the record in a filtered report.']
+];
+document.querySelectorAll('[data-walk]').forEach(function(w){var nodes=[...w.querySelectorAll('.wnode')],stage=w.querySelector('.wd-stage'),body=w.querySelector('.wd-copy'),counter=w.querySelector('.counter'),i=0;function render(){nodes.forEach(function(n,k){n.classList.toggle('active',k===i);n.setAttribute('aria-pressed',k===i?'true':'false')});stage.textContent='Step '+String(i+1).padStart(2,'0')+' · '+copy[i][0];body.textContent=copy[i][1];counter.textContent=(i+1)+' / '+nodes.length;w.querySelector('[data-back]').disabled=i===0;w.querySelector('[data-next]').disabled=i===nodes.length-1}nodes.forEach(function(n){n.addEventListener('click',function(){i=Number(n.dataset.i);render()})});w.querySelector('[data-back]').addEventListener('click',function(){if(i>0){i--;render()}});w.querySelector('[data-next]').addEventListener('click',function(){if(i<nodes.length-1){i++;render()}});w.addEventListener('keydown',function(e){if(e.key==='ArrowRight'&&i<nodes.length-1){i++;render()}if(e.key==='ArrowLeft'&&i>0){i--;render()}});render()});
+var links=[...document.querySelectorAll('.toc a')];if('IntersectionObserver'in window){var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){links.forEach(function(a){a.classList.toggle('active',a.hash==='#'+entry.target.id)})}})},{rootMargin:'-20% 0px -70% 0px'});document.querySelectorAll('main section').forEach(function(s){observer.observe(s)})}
+})();
+</script>
+</body>
+</html>
