@@ -31,8 +31,9 @@ jobs:
 
       - name: Assemble static site
         run: |
-          mkdir -p _site/experiments _site/docs
+          mkdir -p _site/assets _site/experiments _site/docs
           cp index.html _site/index.html
+          cp assets/Schoolnet_logo.webp _site/assets/
           cp experiments/*.html _site/experiments/
           cp docs/*.html _site/docs/
           touch _site/.nojekyll

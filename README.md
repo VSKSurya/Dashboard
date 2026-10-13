@@ -28,6 +28,8 @@ The site root opens the sign-in page. You can also go directly to the [dashboard
 
 The figures are sample data. The selectors are visual prototype controls and do not filter a live data source.
 
+The dashboard logo is stored in `assets/Schoolnet_logo.webp` and is included in the Pages deployment.
+
 ## Run locally
 
 The pages are standalone HTML and CSS with small amounts of browser JavaScript. No package installation or build step is required. Open `index.html` in a browser, or open a page directly, for example `experiments/dashboard.html`.
