@@ -17,6 +17,7 @@ A lightweight, responsive prototype for reviewing teacher training progress, att
 | [Workshop attendance PRD](docs/workshop-attendance-prd.html) | Product requirements for a workshop attendance experience. |
 | [Teacher training dashboard PRD](docs/teacher-training-dashboard-prd.html) | Requirements for the sponsor dashboard, metrics, workflows, and launch decisions. |
 | [Teacher training dashboard test cases](docs/teacher-training-dashboard-test-cases.html) | Manual acceptance cases for access, filters, metrics, exports, accessibility, and data states. |
+| [Code review report](docs/code-review-report.md) | Static review findings, priorities, recommendations, and scope limitations. |
 
 The site root opens the sign-in page. You can also go directly to the [dashboard](https://vsksurya.github.io/Dashboard/experiments/dashboard.html).
 
