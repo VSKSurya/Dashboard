@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fa">
+  <meta name="description" content="Sign in to the Schoolnet learning dashboard.">
+  <title>Sign in | Schoolnet Learning</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --green: #08a653;
+      --green-dark: #078744;
+      --green-soft: #eaf8f0;
+      --blue: #087bd1;
+      --ink: #202124;
+      --muted: #69727c;
+      --line: #e5e9e7;
+      --canvas: #f8f9fa;
+      font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--canvas);
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; min-height: 100vh; }
+    button, input { font: inherit; }
+    button, a, input { -webkit-tap-highlight-color: transparent; }
+    .page { min-height: 100vh; display: grid; grid-template-columns: minmax(400px, 1.02fr) minmax(430px, .98fr); }
+
+    .welcome {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      overflow: hidden;
+      padding: clamp(34px, 5vw, 72px);
+      color: white;
+      background: radial-gradient(ellipse at 93% 12%, #50c981 0, transparent 29%), linear-gradient(145deg, #078b4a 0%, #08a653 52%, #087f4b 100%);
+      isolation: isolate;
+    }
+    .welcome::before, .welcome::after { content: ""; position: absolute; z-index: -1; border: 1px solid #ffffff25; border-radius: 50%; }
+    .welcome::before { width: 620px; height: 620px; right: -280px; bottom: -260px; }
+    .welcome::after { width: 440px; height: 440px; right: -190px; bottom: -170px; }
+    .brand { display: inline-flex; flex-direction: column; align-self: flex-start; color: white; text-decoration: none; }
+    .brand-name { font: 36px/1 Georgia, "Times New Roman", serif; letter-spacing: -.7px; }
+    .brand-name .o { position: relative; }
+    .brand-name .o::after { content: ""; position: absolute; width: 13px; height: 13px; border-radius: 50%; background: linear-gradient(135deg,#f7c36d,#e87655); left: 50%; top: 3px; transform: translateX(-50%); }
+    .tagline { margin-top: 7px; font-size: 10px; letter-spacing: 4.6px; }
+    .welcome-copy { width: min(100%, 550px); padding: 60px 0 44px; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 22px; color: #d8f6e5; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    .eyebrow::before { width: 25px; height: 2px; background: #f7c36d; content: ""; }
+    h1 { max-width: 550px; margin: 0 0 20px; font-size: clamp(42px, 5.1vw, 70px); line-height: 1.04; letter-spacing: -.055em; font-weight: 780; }
+    .welcome-copy > p:last-child { max-width: 440px; margin: 0; color: #e2f7e9; font-size: clamp(16px, 1.55vw, 19px); line-height: 1.7; }
+    .welcome-bottom { display: flex; align-items: center; gap: 12px; color: #e2f7e9; font-size: 13px; }
+    .learn-icon { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #ffffff59; border-radius: 50%; }
+    .learn-icon svg { width: 19px; height: 19px; }
+
+    .main { display: grid; place-items: center; padding: 46px clamp(28px, 7vw, 100px); background: var(--canvas); }
+    .login-card { width: min(100%, 430px); }
+    .mobile-brand { display: none; }
+    .form-heading { margin-bottom: 32px; }
+    .form-heading h2 { margin: 0 0 9px; font-size: clamp(30px, 3.4vw, 38px); line-height: 1.15; letter-spacing: -.045em; }
+    .form-heading p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .field { margin-bottom: 21px; }
+    label { display: block; margin-bottom: 9px; color: #343a40; font-size: 14px; font-weight: 700; }
+    .input-wrap { position: relative; }
+    input[type="text"], input[type="password"] { width: 100%; height: 54px; padding: 0 48px 0 15px; border: 1px solid #dce2df; border-radius: 8px; outline: none; background: white; color: var(--ink); font-size: 15px; transition: border-color .18s, box-shadow .18s; }
+    input::placeholder { color: #9aa39e; }
+    input:focus { border-color: var(--green); box-shadow: 0 0 0 3px #08a6531c; }
+    .field-icon { position: absolute; top: 50%; right: 15px; width: 19px; height: 19px; transform: translateY(-50%); color: #7c8781; pointer-events: none; }
+    .password-toggle { position: absolute; top: 50%; right: 10px; display: grid; width: 34px; height: 34px; place-items: center; transform: translateY(-50%); border: 0; border-radius: 6px; background: transparent; color: #738078; cursor: pointer; }
+    .password-toggle:hover { background: #f2f6f3; color: var(--green-dark); }
+    .password-toggle svg { width: 19px; height: 19px; }
+    .form-options { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 2px 0 24px; font-size: 13px; }
+    .remember { display: inline-flex; align-items: center; gap: 8px; color: #56605a; cursor: pointer; }
+    .remember input { width: 16px; height: 16px; margin: 0; accent-color: var(--green); }
+    .help { color: var(--green-dark); font-weight: 700; text-decoration: none; }
+    .help:hover { text-decoration: underline; }
+    .submit { display: flex; width: 100%; min-height: 54px; align-items: center; justify-content: center; gap: 10px; border: 0; border-radius: 8px; background: var(--green); color: white; font-size: 15px; font-weight: 750; cursor: pointer; box-shadow: 0 8px 18px #07874420; transition: background .18s, transform .18s, box-shadow .18s; }
+    .submit:hover { background: var(--green-dark); box-shadow: 0 10px 22px #07874430; transform: translateY(-1px); }
+    .submit svg { width: 18px; height: 18px; }
+    .submit:disabled { cursor: wait; opacity: .8; transform: none; }
+    .message { min-height: 22px; margin: 13px 0 0; color: #b42318; font-size: 13px; line-height: 1.5; }
+    .message.success { color: #087a42; }
+    .demo-note { display: flex; gap: 11px; align-items: flex-start; margin-top: 21px; padding: 14px 15px; border: 1px solid #dcefe4; border-radius: 8px; background: #f0faf4; color: #476252; font-size: 12px; line-height: 1.55; }
+    .demo-note svg { width: 17px; height: 17px; flex: 0 0 auto; margin-top: 1px; color: var(--green); }
+    .demo-note strong { color: #245a3b; }
+    .legal { margin: 38px 0 0; color: #88918b; font-size: 11px; line-height: 1.6; text-align: center; }
+    .legal a { color: #68746d; text-decoration: none; }
+    .legal a:hover { text-decoration: underline; }
+    :focus-visible { outline: 3px solid #087bd166; outline-offset: 3px; }
+
+    @media (max-width: 850px) {
+      .page { grid-template-columns: minmax(310px, .85fr) minmax(400px, 1.15fr); }
+      .welcome { padding: 34px; }
+      .welcome-copy { padding-top: 35px; }
+      .welcome-copy h1 { font-size: clamp(39px, 6vw, 56px); }
+      .main { padding-inline: 38px; }
+    }
+    @media (max-width: 680px) {
+      .page { display: block; min-height: 100vh; }
+      .welcome { display: none; }
+      .main { min-height: 100vh; align-items: start; padding: 32px 24px 25px; }
+      .login-card { width: min(100%, 440px); margin: 0 auto; }
+      .mobile-brand { display: inline-flex; margin-bottom: clamp(48px, 12vh, 100px); color: var(--ink); }
+      .mobile-brand .tagline { color: #303638; }
+      .form-heading { margin-bottom: 28px; }
+      .legal { margin-top: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="welcome" aria-label="Schoolnet introduction">
+      <a class="brand" href="#" aria-label="Schoolnet home">
+        <span class="brand-name">Sch<span class="o">o</span>olnet</span>
+        <span class="tagline">LEARNING FOR LIFE</span>
+      </a>
+      <div class="welcome-copy">
+        <p class="eyebrow">A brighter way to learn</p>
+        <h1>Every learner can <span style="color:#ffdc8d">thrive.</span></h1>
+        <p>Welcome to your learning space. Sign in to continue building skills, sharing ideas, and discovering what’s possible.</p>
+      </div>
+      <div class="welcome-bottom">
+        <span class="learn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m3 9 9-5 9 5-9 5-9-5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M6.5 11v5.2c3.2 2.8 7.8 2.8 11 0V11M21 9v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span>Learning for life, wherever you are.</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="login-card" aria-labelledby="login-title">
+        <a class="brand mobile-brand" href="#" aria-label="Schoolnet home">
+          <span class="brand-name">Sch<span class="o">o</span>olnet</span>
+          <span class="tagline">LEARNING FOR LIFE</span>
+        </a>
+        <header class="form-heading">
+          <h2 id="login-title">Welcome back</h2>
+          <p>Sign in with your account details to access your learning dashboard.</p>
+        </header>
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="user-id">User ID</label>
+            <div class="input-wrap">
+              <input id="user-id" name="username" type="text" value="Admin" autocomplete="username" spellcheck="false" required>
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M5 20c.5-3.7 3.2-5.7 7-5.7s6.5 2 7 5.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <input id="password" name="password" type="password" value="Admin@123" autocomplete="current-password" required>
+              <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false" id="password-toggle">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="1.7"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-options">
+            <label class="remember"><input type="checkbox" name="remember"> Remember me</label>
+            <a class="help" href="mailto:support@schoolnet.org.in?subject=Account%20access%20help">Need help?</a>
+          </div>
+          <button class="submit" type="submit">
+            <span>Sign in</span>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="message" id="form-message" role="status" aria-live="polite"></p>
+        </form>
+        <div class="demo-note">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span><strong>Demo access</strong><br>Use the prefilled account to explore this login page.</span>
+        </div>
+        <p class="legal">By signing in, you agree to our <a href="#terms">Terms of Use</a> and <a href="#privacy">Privacy Policy</a>.</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const form = document.querySelector('#login-form');
+    const userId = document.querySelector('#user-id');
+    const password = document.querySelector('#password');
+    const message = document.querySelector('#form-message');
+    const toggle = document.querySelector('#password-toggle');
+
+    toggle.addEventListener('click', () => {
+      const reveal = password.type === 'password';
+      password.type = reveal ? 'text' : 'password';
+      toggle.setAttribute('aria-label', reveal ? 'Hide password' : 'Show password');
+      toggle.setAttribute('aria-pressed', String(reveal));
+      password.focus();
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const valid = userId.value.trim() === 'Admin' && password.value === 'Admin@123';
+      message.classList.toggle('success', valid);
+      message.textContent = valid
+        ? 'You’re signed in. Your learning dashboard is ready.'
+        : 'Those details don’t match. Check your User ID and password, then try again.';
+      if (valid) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+      password.focus();
+    });
+  </script>
+</body>
+</html>
