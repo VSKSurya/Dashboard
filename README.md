@@ -47,6 +47,13 @@ This project used the **Schoolnet frontend** skill for the education-focused vis
 
 Codex skills are reusable instruction sets that guide development work; they do not add runtime dependencies to these pages. The repository includes the Schoolnet frontend skill, not a Skills Marketplace application or marketplace integration. Other skills can be discovered and installed separately through the skills marketplace available in your Codex environment.
 
+## AI agent and subagent contributions
+
+- **Primary agent:** Codex handled repository inspection, dashboard and login updates, the PRD and test-case documents, and the static code-review report.
+- **Subagents:** No delegated subagent work is recorded for this repository update. The code-review report was prepared by the primary agent, not a separate subagent.
+- **Skill contribution:** The Schoolnet frontend skill supplied visual guidance. A skill is an instruction set, not an AI subagent.
+- **Review limits:** The code-review report covers the committed prototype source. No automated tests or production-data checks were run, and the dashboard still uses sample data and demo-only authentication.
+
 ## Demo authentication
 
 The sign-in flow is for visual demonstration only. It checks credentials in browser-side JavaScript and does not provide real authentication, account security, or access control. Do not use it to protect private data.
