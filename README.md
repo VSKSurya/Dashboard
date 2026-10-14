@@ -50,9 +50,25 @@ Codex skills are reusable instruction sets that guide development work; they do 
 ## AI agent and subagent contributions
 
 - **Primary agent:** Codex handled repository inspection, dashboard and login updates, the PRD and test-case documents, and the static code-review report.
-- **Subagents:** No delegated subagent work is recorded for this repository update. The code-review report was prepared by the primary agent, not a separate subagent.
+- **Project-scoped agents:** Ten specialist configurations requested from the supplied reference are stored under `.codex/agents/`. The existing `frontend_developer` configuration is retained, for eleven agent definitions total. The new roles are configured for Codex delegation; creating their definitions does not mean they have already run.
 - **Skill contribution:** The Schoolnet frontend skill supplied visual guidance. A skill is an instruction set, not an AI subagent.
 - **Review limits:** The code-review report covers the committed prototype source. No automated tests or production-data checks were run, and the dashboard still uses sample data and demo-only authentication.
+
+| Agent | Responsibility |
+| --- | --- |
+| [csharp_developer](.codex/agents/csharp_developer.toml) | C# and .NET implementation |
+| [react_developer](.codex/agents/react_developer.toml) | React and TypeScript UI work, using existing TanStack Query or Zustand dependencies when present |
+| [tester_developer](.codex/agents/tester_developer.toml) | Test design and focused test implementation |
+| [node_developer](.codex/agents/node_developer.toml) | Node.js services, scripts, and tooling |
+| [db_query_optimizer](.codex/agents/db_query_optimizer.toml) | Read-only SQL and query-plan analysis |
+| [pm](.codex/agents/pm.toml) | Requirements, user stories, and acceptance criteria |
+| [code_reviewer](.codex/agents/code_reviewer.toml) | Read-only correctness, security, regression, and test-gap review |
+| [security_reviewer](.codex/agents/security_reviewer.toml) | Read-only application security and privacy review |
+| [devops_agent](.codex/agents/devops_agent.toml) | CI/CD and deployment configuration |
+| [scrum_master](.codex/agents/scrum_master.toml) | Backlog refinement and sprint planning |
+| [frontend_developer](.codex/agents/frontend-developer.toml) | Accessible SaaS frontend work with React, TypeScript, and MUI |
+
+Codex loads project-scoped custom agents from `.codex/agents/`. The project configuration enables delegation and caps a session at four concurrent subagent threads. Ask Codex to delegate a specific task to one of these named roles. The agents inherit the parent session's permissions and tools. See [official Codex subagent documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents) for the configuration format and behavior.
 
 ## Demo authentication
 
