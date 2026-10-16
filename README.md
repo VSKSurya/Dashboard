@@ -43,9 +43,9 @@ GitHub Pages publishes the site using [`.github/workflows/pages.yml`](.github/wo
 
 ## Skills and Skills Marketplace
 
-This project used the **Schoolnet frontend** skill for the education-focused visual direction. Its guidance is checked into the repository at [`skills/schoolnet-frontend/SKILL.md`](skills/schoolnet-frontend/SKILL.md).
+This project includes the **Schoolnet frontend** skill for the education-focused visual direction and the **Training Tracker style** skill, derived from the supplied Bootstrap/jQuery stylesheet. Their guidance is checked into [`skills/schoolnet-frontend/SKILL.md`](skills/schoolnet-frontend/SKILL.md) and [`skills/training-tracker-style/SKILL.md`](skills/training-tracker-style/SKILL.md).
 
-Codex skills are reusable instruction sets that guide development work; they do not add runtime dependencies to these pages. The repository includes the Schoolnet frontend skill, not a Skills Marketplace application or marketplace integration. Other skills can be discovered and installed separately through the skills marketplace available in your Codex environment.
+Codex skills are reusable instruction sets that guide development work; they do not add runtime dependencies to these pages. These checked-in skills are project guidance, not a Skills Marketplace application or marketplace integration. Other skills can be discovered and installed separately through the skills marketplace available in your Codex environment.
 
 ## AI agent and subagent contributions
 
