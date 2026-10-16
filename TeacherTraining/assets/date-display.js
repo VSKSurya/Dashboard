@@ -217,7 +217,7 @@
 
         const formatted = input.value
             ? format(input.value)
-            : 'dd-MMM-yyyy';
+            : 'dd-MMM-YYYY';
 
         if (
             display &&
@@ -228,7 +228,7 @@
 
         const title = input.value
             ? formatted
-            : 'Select date (dd-MMM-yyyy)';
+            : 'Select date (dd-MMM-YYYY)';
 
         if (input.title !== title) {
             input.title = title;

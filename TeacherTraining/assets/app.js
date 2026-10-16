@@ -365,24 +365,12 @@
 
     if (window.KGBVScenario) {
         const hadKgbvScenario = db.projects.some(project => project.code === window.KGBVScenario.projectCode);
+        const traineeCountBeforeKgbvMerge = db.trainees.length;
         db = window.KGBVScenario.merge(db, R);
-        if (!hadKgbvScenario) {
+        if (!hadKgbvScenario || db.trainees.length !== traineeCountBeforeKgbvMerge) {
             try {
                 localStorage.setItem(KEY, JSON.stringify(db));
-                setTimeout(() => message('KGBV programme data added. Existing projects and browser records were retained.'), 100)
-            } catch (e) {
-                setTimeout(() => message('KGBV programme data was loaded for this view but could not be saved to browser storage: ' + e.message, true), 100)
-            }
-        }
-    }
-
-    if (window.KGBVScenario) {
-        const hadKgbvScenario = db.projects.some(project => project.code === window.KGBVScenario.projectCode);
-        db = window.KGBVScenario.merge(db, R);
-        if (!hadKgbvScenario) {
-            try {
-                localStorage.setItem(KEY, JSON.stringify(db));
-                setTimeout(() => message('KGBV programme data added. Existing projects and browser records were retained.'), 100)
+                setTimeout(() => message(hadKgbvScenario ? 'KGBV sample trainees added for all programme states.' : 'KGBV programme data added. Existing projects and browser records were retained.'), 100)
             } catch (e) {
                 setTimeout(() => message('KGBV programme data was loaded for this view but could not be saved to browser storage: ' + e.message, true), 100)
             }

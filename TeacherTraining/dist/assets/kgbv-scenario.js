@@ -72,8 +72,50 @@
         while (collection.some(item => item.id === prefix + n)) n++;
         return prefix + n;
     }
+    function ensureSampleTraineeCoverage(db) {
+        const project = db.projects.find(item => item.code === projectCode);
+        if (!project) return db;
+        db.trainees ||= [];
+
+        const sampleNames = {
+            AP: ['Lakshmi Devi', 'Ravi Kumar'], AR: ['Tana Taba', 'Mimi Koyu'],
+            AS: ['Rina Das', 'Rahul Bora'], CG: ['Sita Netam', 'Amit Markam'],
+            GJ: ['Kanku Vasava', 'Mehul Rathwa'], HR: ['Sunita Malik', 'Poonam Dahiya'],
+            JH: ['Anita Murmu', 'Birsa Soren'], KA: ['Savitha Nayak', 'Manjula Gowda'],
+            MN: ['Ningthoujam Rani', 'Thokchom Ibemcha'], RJ: ['Kamla Meena', 'Gita Garasia'],
+            SK: ['Pema Bhutia', 'Dawa Lepcha'], TS: ['Swapna Naik', 'Rajitha Nayak'],
+            UP: ['Shabnam Khan', 'Suman Pal']
+        };
+        states.forEach(([state,,,abbr]) => {
+            const school = db.schools.find(item => item.project === project.id && item.state === state);
+            if (!school) return;
+            const schoolIds = batch => batch.schoolIds || [batch.school];
+            const teacherBatch = db.batches.find(batch => batch.project === project.id && batch.plan === 'KGBV-PH1' && schoolIds(batch).includes(school.id));
+            const studentBatch = db.batches.find(batch => batch.project === project.id && batch.plan === 'KGBV-ST' && schoolIds(batch).includes(school.id));
+            const [teacherName, studentName] = sampleNames[abbr];
+            if (teacherBatch && !db.trainees.some(item => item.id === 'KGBV-SAMPLE-T-' + abbr)) {
+                db.trainees.push({
+                    id:'KGBV-SAMPLE-T-' + abbr, batch:teacherBatch.id, name:teacherName,
+                    mobile:'', email:'', approved:false, created:'2026-10-14', state,
+                    district:school.district, school:school.id, schoolName:school.name,
+                    udise:school.udise, gender:'Female', designation:'Teacher',
+                    traineeType:'Teacher', sample:true
+                });
+            }
+            if (studentBatch && !db.trainees.some(item => item.id === 'KGBV-SAMPLE-S-' + abbr)) {
+                db.trainees.push({
+                    id:'KGBV-SAMPLE-S-' + abbr, batch:studentBatch.id, name:studentName,
+                    mobile:'', email:'', approved:true, created:'2026-10-14', state,
+                    district:school.district, school:school.id, schoolName:school.name,
+                    udise:school.udise, grade:'IX', traineeType:'Student', sample:true
+                });
+            }
+        });
+        return db;
+    }
     function merge(db, rules) {
-        if (!db || !Array.isArray(db.projects) || db.projects.some(p => p.code === projectCode)) return db;
+        if (!db || !Array.isArray(db.projects)) return db;
+        if (db.projects.some(p => p.code === projectCode)) return ensureSampleTraineeCoverage(db);
         const projectId = programme.id;
         db.projects.push({...programme});
 
@@ -348,7 +390,7 @@
             initialTrainingDeadline:programme.initialTrainingDeadline,
             assumptions:['PO date 1 Sep 2026','Installation deadline 1 Jan 2027','Initial training deadline 1 Mar 2027','Sample contacts and UDISE values are synthetic.']
         };
-        return db;
+        return ensureSampleTraineeCoverage(db);
     }
 
     root.KGBVScenario = {projectCode,merge};
