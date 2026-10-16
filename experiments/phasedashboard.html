@@ -73,6 +73,18 @@
     .phase-fact{display:flex;justify-content:center;gap:4px;white-space:nowrap}.phase-fact strong{color:#49637e;font-weight:700}
     .phase-status{font-weight:750}.phase-card.completed .phase-status{color:#078347}.phase-card.current .phase-status{color:#bd7100}.phase-card.upcoming .phase-status{color:#6d8094}
     @media(max-width:900px){.phase-grid{min-width:900px}}
+    .app{transition:grid-template-columns .2s ease}
+    .app.is-collapsed{grid-template-columns:68px minmax(0,1fr)}
+    .app.is-collapsed .sidebar{padding-inline:8px}
+    .app.is-collapsed .brand{min-height:75px}
+    .app.is-collapsed .brand strong,.app.is-collapsed .brand span,.app.is-collapsed .side-link span,.app.is-collapsed .side-bottom p,.app.is-collapsed .side-logo{display:none}
+    .app.is-collapsed .brand-mark{width:42px;height:34px;margin:0}
+    .app.is-collapsed .side-nav{gap:8px}
+    .app.is-collapsed .side-link{justify-content:center;padding:0}
+    .app.is-collapsed .side-link svg{width:21px;height:21px}
+    .app.is-collapsed .side-bottom{padding:12px 2px 0}
+    .app.is-collapsed .collapse{margin-inline:auto;transform:rotate(180deg)}
+    @media(max-width:900px) and (min-width:621px){.app.is-expanded{grid-template-columns:190px minmax(0,1fr)}.app.is-expanded .sidebar{padding-inline:12px}.app.is-expanded .sidebar .brand{display:flex;min-height:100px}.app.is-expanded .brand strong,.app.is-expanded .brand span,.app.is-expanded .side-link span,.app.is-expanded .side-logo{display:block}.app.is-expanded .brand-mark{width:53px;height:40px;margin-bottom:5px}.app.is-expanded .side-nav{gap:5px}.app.is-expanded .side-link{justify-content:flex-start;padding:0 12px}.app.is-expanded .side-link svg{width:19px;height:19px}.app.is-expanded .side-bottom{padding:15px 10px 0}.app.is-expanded .collapse{margin-left:auto;transform:none}}
   </style>
 </head>
 <body>
@@ -92,7 +104,7 @@
       <a class="side-link" href="#effectiveness"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2.5 8 3v5.8c0 5-3.4 8.5-8 10.2-4.6-1.7-8-5.2-8-10.2V5.5l8-3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m8.5 11.5 2.2 2.2 4.8-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Certificates</span></a>
       <a class="side-link" href="#locations"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8m-8 4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Reports</span></a>
     </nav>
-    <div class="side-bottom"><img class="side-logo" src="../assets/AddingDimensions.png" alt="Adding Dimensions"><button class="collapse" type="button" aria-label="Collapse navigation"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    <div class="side-bottom"><img class="side-logo" src="../assets/AddingDimensions.png" alt="Adding Dimensions"><button class="collapse" type="button" aria-label="Collapse navigation" aria-expanded="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
   </aside>
 
   <main class="main" id="overview">
@@ -262,7 +274,16 @@
 
   document.querySelector('#notifications').addEventListener('click',()=>showToast('You’re all caught up on dashboard notifications.'));
   document.querySelector('#profile-button').addEventListener('click',()=>showToast('Signed in as Project Sponsor.'));
-  document.querySelector('.collapse').addEventListener('click',()=>showToast('Navigation is optimized for this screen size.'));
+  const appRoot=document.querySelector('.app');
+  const collapseButton=document.querySelector('.collapse');
+  function setSidebarCollapsed(collapsed){
+    appRoot.classList.toggle('is-collapsed',collapsed);
+    appRoot.classList.toggle('is-expanded',!collapsed && window.matchMedia('(max-width: 900px) and (min-width: 621px)').matches);
+    collapseButton.setAttribute('aria-label',collapsed?'Expand navigation':'Collapse navigation');
+    collapseButton.setAttribute('aria-expanded',String(!collapsed));
+  }
+  if(window.matchMedia('(max-width: 900px) and (min-width: 621px)').matches)setSidebarCollapsed(true);
+  collapseButton.addEventListener('click',()=>setSidebarCollapsed(!appRoot.classList.contains('is-collapsed')));
   function selectPhase(phase){
     document.querySelectorAll('.phase-card').forEach(card=>{
       const selected=card===phase;
