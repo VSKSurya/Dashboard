@@ -1,0 +1,10 @@
+ERNET Admin dashboard (v4.10)
+Login A2 / Demo@123 to open the ERNET dashboard. Other roles retain their dashboards. Filters: project, state, district, school, plan, batch, from/to and participant type. Date range selects batches overlapping the range and attendance marks within it. Participant Type filters participant measures; operational batch counts retain the selected batch scope. Targets use explicit targetParticipants or capacity fallback; type-specific targets remain pending unless teacherTarget/studentTarget exists. No fabricated sponsor totals are seeded.
+
+Definitions: Enrolled = registered trainees. Attended = distinct trainees with Present marks. Trained/Completed = learners meeting configured provisional eligibility. Training Progress/Achievement = Completed / Target. Attendance = Present marks / all recorded marks; unmarked days are excluded. Certified = distinct trainees with stored certificate records/previews, not production issuance. Upcoming = future start; Ongoing = today in batch period; Completed = finally closed; Delayed = period ended but not finally closed. These statuses partition selected batches. Teacher classification uses explicit type, teaching designation or labelled sample teacher name. Others are Unknown and included only in All. Production participant typing and target definitions require confirmation.
+
+Geographic table drills State → District → School → Batch details. KPI cards and charts recompute; operational status buttons filter the batch table. No authorized operational write grants are added to ERNET.
+
+Source example discrepancies: 35 + 68 + 142 + 12 = 257, not 230. Lifecycle Attended 9,850 differs from participation attended 10,170. Lifecycle Completed 9,420 differs from participation completed 9,850. Training Progress 72% differs from Completed/Target 75.4%. Examples remain design references, not live measures.
+
+Verification: 21 ERNET view/filter/scope/missing-criteria/drill checks, 7 PDF viewer checks and registration-to-mobile-login checks passed in non-browser fixtures. JavaScript syntax checked. Browser visual checks remain unavailable.

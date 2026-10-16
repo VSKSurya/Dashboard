@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login · Training Tracker</title>
+    <link rel="stylesheet" href="assets/vendor/bootstrap-5.3.8.min.css">
+    <link rel="stylesheet" href="assets/vendor/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body data-page="login" class="login-page">
+    <main class="login-layout">
+        <section class="login-intro">
+            <a class="login-brand" href="login.html">
+                <img class="schoolnet-logo" src="assets/img/AddingDimensions.png" alt="Adding Dimensions">
+            </a>
+            <p class="login-kicker">TEACHER DEVELOPMENT</p>
+            <h1>Your training workspace</h1>
+            <p>Sign in to see the projects, batches and learning activities assigned to your role.</p>
+            <ul>
+                <li>Central and project administration</li>
+                <li>Trainer and trainee workspaces</li>
+                <li>Training resources, assessments and feedback</li>
+            </ul>
+            <div class="login-prototype d-none">Local POC login · demo credentials<br>This prototype runs in your browser.
+                Production authentication requires a server.</div>
+        </section>
+        <section class="login-card">
+            <p class="eyebrow">WELCOME BACK</p>
+            <h2>Sign in</h2>
+            <p class="sub">Enter your User ID or registered Mobile Number and password.</p>
+            <p class="login-demo-note">Local prototype admin sign-in: <strong>admin</strong> / <strong>admin@123</strong>. Browser-only demo; production authentication requires a server.</p>
+            <p id="loginStatus" role="status"></p>
+            <form id="loginForm"><label for="loginId">User ID</label><input id="loginId" name="username" type="text"
+                    autocomplete="username" placeholder="e.g. admin, A1, or your 10-digit Mobile Number" required><label
+                    for="loginPassword">Password</label><input id="loginPassword" name="password" type="password"
+                    autocomplete="current-password" required><button id="togglePassword" type="button"
+                    class="login-toggle" aria-pressed="false">Show password</button>
+                <p id="loginError" role="alert" class="invalid-feedback"></p><button type="submit"
+                    class="btn btn-primary login-submit">Login</button>
+            </form>
+            <p><a href="reset-password.html">Reset Password</a></p>
+            <p><a class="btn btn-outline-primary" href="registration.html">Teacher / Trainee
+                    Registration</a><br><small class="d-none">New registration: enter your provided Batch Code. Your Mobile Number
+                    becomes your Login User ID. Default POC password: Demo@123.</small></p>
+            <details class="demo-credentials d-none" open>
+                <summary>Demo login accounts</summary>
+                <p>All six accounts use password <strong>Demo@123</strong>.</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A1</td>
+                                <td>Schoolnet Admin</td>
+                            </tr>
+                            <tr>
+                                <td>A2</td>
+                                <td>ERNET Admin</td>
+                            </tr>
+                            <tr>
+                                <td>A3</td>
+                                <td>State Admin</td>
+                            </tr>
+                            <tr>
+                                <td>A4</td>
+                                <td>School Admin</td>
+                            </tr>
+                            <tr>
+                                <td>A5</td>
+                                <td>Trainer</td>
+                            </tr>
+                            <tr>
+                                <td>A6</td>
+                                <td>Trainee Teacher / Student</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+            <details class="demo-persona d-none" open>
+                <summary>Review with the demo persona selector</summary>
+                <p>Enter a demo session to switch personas on the dashboard.</p><label for="demoRole">Demo persona · not
+                    authentication</label><select id="demoRole">
+                    <option value="A1">A1 · Schoolnet Admin</option>
+                    <option value="A2">A2 · ERNET Admin</option>
+                    <option value="A3">A3 · State Admin</option>
+                    <option value="A4">A4 · School Admin</option>
+                    <option value="A5">A5 · Trainer</option>
+                    <option value="A6">A6 · Trainee Teacher / Student</option>
+                </select><button id="demoEntry" class="btn" type="button">Enter demo review</button>
+            </details>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-links"><span>Training Tracker</span><a href="docs/Business-Review-Pack.html" target="_blank"
+                rel="noopener">Business review pack ↗</a></div>
+        <div class="schoolnet-credit"><span>Powered by Schoolnet India Limited</span><img
+                src="assets/img/Schoolnet_logo%20-%20Copy.webp" alt="Schoolnet India Limited" width="311" height="75"></div>
+    </footer>
+    <script src="assets/vendor/jquery-4.0.0.min.js"></script>
+    <script src="assets/vendor/bootstrap-5.3.8.bundle.min.js"></script>
+    <script src="assets/auth.js"></script>
+</body>
+
+</html>
