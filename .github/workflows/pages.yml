@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p _site/assets _site/experiments _site/docs _site/TeacherTraining
           cp index.html _site/index.html
-          cp assets/Schoolnet_logo.webp _site/assets/
+          cp assets/* _site/assets/
           cp experiments/*.html _site/experiments/
           cp docs/*.html _site/docs/
           cp -a TeacherTraining/dist/. _site/TeacherTraining/
