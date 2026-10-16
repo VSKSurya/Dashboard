@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Attendance · Training Tracker</title>
+    <link rel="stylesheet" href="assets/vendor/bootstrap-5.3.8.min.css">
+    <link rel="stylesheet" href="assets/vendor/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body data-page="attendance"><a class="skip" href="#main">Skip to content</a>
+    <aside id="sidebar"><a class="brand" href="index.html"><img class="schoolnet-logo" src="assets/img/AddingDimensions.png" alt="Adding Dimensions"></a>
+        <p class="nav-label">WORKSPACE</p>
+        <nav id="nav" aria-label="Main navigation"></nav>
+        <div class="sidebar-note"><!--<span class="badge">REVIEW PROTOTYPE</span>
+            <p>Synthetic data · This browser only</p>-->
+            <p id="identity"></p><button id="signout" class="btn btn-outline-secondary">Leave demo session</button>
+        </div>
+    </aside>
+    <div class="workspace">
+        <header><button id="menu" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+            <div class="context"><label for="projectContext">Project context</label><select
+                    id="projectContext"></select></div>
+           <div class="context d-none"><label for="persona">Demo persona · not authentication</label><select
+                    id="persona"></select></div><a class="session-login-link" href="login.html">Login / switch user</a>
+        </header>
+        <!-- <div class="notice">Stakeholder review · provisional decisions are labelled. Use synthetic personal data only.
+        </div> -->
+        <div id="message" role="status" aria-live="polite"></div>
+        <main id="main" tabindex="-1"></main>
+        <footer class="site-footer">
+             <div class="footer-links"><span>Teacher Training Tracker</span></div>
+            <div class="schoolnet-credit"><span>Powered by Schoolnet India Limited</span><img
+                    src="assets/img/Schoolnet_logo%20-%20Copy.webp" alt="Schoolnet India Limited" width="311" height="75"></div>
+        </footer>
+    </div>
+    <dialog id="editor" aria-labelledby="dialogTitle">
+        <div class="dialog-head">
+            <h2 id="dialogTitle"></h2><button id="cancelDialog" aria-label="Close dialog">×</button>
+        </div>
+        <div id="dialogBody"></div>
+    </dialog>
+    <script src="assets/vendor/jquery-4.0.0.min.js"></script>
+    <script src="assets/vendor/bootstrap-5.3.8.bundle.min.js"></script>
+    <script src="assets/vendor/jszip-3.10.1.min.js"></script>
+    <script src="assets/catalogue.js"></script>
+    <script src="assets/decisions.js"></script>
+    <script src="assets/rules.js"></script>
+    <script src="assets/excel.js"></script>
+    <script src="assets/auth.js"></script>
+    <script src="assets/content-samples.js"></script>
+    <script src="assets/kgbv-scenario.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+
+</html>

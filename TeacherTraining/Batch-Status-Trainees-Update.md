@@ -1,0 +1,1 @@
+Batch Status → View Batches → View Details opens a trainee-only dialog for the selected batch. No batch metadata or View Trainees / Review completion links appear in this dialog. Existing batch details elsewhere remain available. Local launcher and previous ERNET changes retained. 43 ERNET checks and six-role rendering checks pass; browser visual verification remains pending.
