@@ -2,6 +2,8 @@
 
 ## Quick start
 
+**Published tracker:** [Open in a browser](https://vsksurya.github.io/Dashboard/TeacherTraining/login.html). GitHub Pages deploys this folder from `main`; updates publish after the Pages workflow completes.
+
 1. Install Python 3 if it is not already installed.
 2. Double-click **Start-Training-Tracker.bat**. On Windows, the launcher starts a local server and opens the sign-in page. Keep its console window open while using the app.
 3. Or run `py -3 start-poc.py` from this folder and open [http://localhost:8080/login.html](http://localhost:8080/login.html).
