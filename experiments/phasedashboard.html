@@ -52,7 +52,8 @@
     @media(max-width:1250px){.kpis{grid-template-columns:repeat(5,minmax(0,1fr))}}
     @media(max-width:620px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
     .phase-overview{margin:8px 0 14px;overflow-x:auto;padding:15px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow)}
-    .phase-overview-title{margin:0 0 13px;color:#173553;font-size:18px;font-weight:750;letter-spacing:-.25px}
+    .phase-overview-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+    .phase-overview-title{margin:0;color:#173553;font-size:18px;font-weight:750;letter-spacing:-.25px}
     .phase-grid{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;min-width:850px}
     .phase-grid::before{position:absolute;top:27px;right:10%;left:10%;height:2px;background:linear-gradient(to right,#08a653 0 50%,#ff9b18 50% 75%,#aab8c7 75% 100%);content:""}
     .phase-card{position:relative;display:flex;min-width:0;min-height:200px;flex-direction:column;align-items:center;padding:4px 6px 9px;border:1px solid transparent;border-radius:10px;background:transparent;color:inherit;font:inherit;text-align:center;cursor:pointer;transition:border-color .16s,background .16s,box-shadow .16s}
@@ -125,7 +126,7 @@
     </div>
 
     <section class="phase-overview" aria-labelledby="phase-overview-title">
-      <h2 class="phase-overview-title" id="phase-overview-title">Teacher Training · Phase Overview</h2>
+      <div class="phase-overview-header"><h2 class="phase-overview-title" id="phase-overview-title">Phase wise Training</h2><button class="info-button" type="button" aria-label="Show phase training information" data-info-title="Phase wise Training" data-info="Shows each training phase with its duration, status, start month and year, and participant completion progress. Select a phase card to highlight it.">i</button></div>
       <div class="phase-grid">
         <article class="phase-card completed" role="button" tabindex="0" aria-pressed="false">
           <div class="phase-node"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 3v3m8-3v3M8 13l2.5 2.5L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="phase-check">✓</span></div>
