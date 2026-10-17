@@ -31,12 +31,14 @@ jobs:
 
       - name: Assemble static site
         run: |
-          mkdir -p _site/assets _site/experiments _site/docs _site/TeacherTraining
+          mkdir -p _site/assets _site/experiments _site/docs _site/TeacherTraining _site/demo-video/out
           cp index.html _site/index.html
           cp assets/* _site/assets/
           cp experiments/*.html _site/experiments/
           cp docs/*.html _site/docs/
           cp -a TeacherTraining/dist/. _site/TeacherTraining/
+          cp demo-video/index.html demo-video/theme.css _site/demo-video/
+          cp demo-video/out/video.mp4 _site/demo-video/out/video.mp4
           touch _site/.nojekyll
 
       - name: Upload site artifact
