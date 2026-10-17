@@ -1650,6 +1650,90 @@ footer.site-footer a:hover {
     border-radius: 4px
 }
 
+.library-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 26px;
+    margin: 0 0 10px
+}
+
+.library-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid #e1e9f1;
+    border-radius: 14px;
+    background: #f5f8fb;
+    color: #536b83;
+    font-size: .7rem;
+    line-height: 1.2
+}
+
+.library-workflow {
+    background: #edf6f4
+}
+
+.library-workflow .library-document span {
+    color: #216656
+}
+
+.content-office-preview {
+    display: grid;
+    gap: 16px
+}
+
+.content-office-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px;
+    border: 1px solid #dbe4ee;
+    border-radius: 12px;
+    background: #f7f9fc
+}
+
+.content-office-heading h3 {
+    margin: 0 0 5px;
+    color: #17365d;
+    font-size: 1.1rem
+}
+
+.content-office-heading p {
+    margin: 0 0 8px;
+    color: #66758a;
+    font-size: .82rem;
+    overflow-wrap: anywhere
+}
+
+.content-text-preview {
+    max-height: 48vh;
+    overflow: auto;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid #dbe4ee;
+    border-radius: 10px;
+    background: #fff;
+    color: #243244;
+    font: .86rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere
+}
+
+.content-preview-empty {
+    margin: 0;
+    padding: 20px;
+    border: 1px dashed #cbd8e5;
+    border-radius: 10px;
+    color: #66758a
+}
+
+.content-office-preview .library-download {
+    justify-self: start;
+    flex: initial;
+    padding-inline: 18px
+}
+
 .library-page .content-card .actions {
     margin-top: 16px;
     display: flex;

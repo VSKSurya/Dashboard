@@ -4159,17 +4159,17 @@
     let contentTab = 'ALL',
         contentSearch = '',
         contentStage = null;
-    const contentTabs = ['ALL', 'Videos', 'PPTx', 'PDF', 'Docx', 'Images'];
+    const contentTabs = ['ALL', 'Videos', 'PDF_MANUALS', 'Presentations', 'Others'];
 
     function contentCategory(file) {
         let ext = String(file.filename || file.name || '').match(/\.([a-z0-9]+)$/i)?.[1]?.toLowerCase();
-        return ['png', 'jpg', 'jpeg'].includes(ext) ? 'Images' : ['ppt', 'pptx'].includes(ext) ? 'PPTx' : ext === 'pdf' ? 'PDF' : ext === 'docx' ? 'Docx' : ['mp4', 'webm', 'mov', 'm4v', 'avi', 'mpeg', 'mpg'].includes(ext) ? 'Videos' : null
+        return ['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext) ? 'Others' : ['ppt', 'pptx'].includes(ext) ? 'Presentations' : ext === 'pdf' ? 'PDF_MANUALS' : ['docx', 'bpmn', 'drawio', 'workflow', 'json'].includes(ext) ? 'Others' : ['mp4', 'webm', 'mov', 'm4v', 'avi', 'mpeg', 'mpg'].includes(ext) ? 'Videos' : null
     }
 
     function contentFileError(file) {
         let type = contentCategory(file),
             ext = String(file.name || '').split('.').pop().toLowerCase();
-        if (!type) return 'Unsupported format. Use PPT/PPTX, PDF, DOCX, PNG/JPG or an approved video format.';
+        if (!type) return 'Unsupported format. Use PPT/PPTX, PDF, DOCX, BPMN, Draw.io, WORKFLOW, JSON, PNG/JPG/WEBP/GIF or an approved video format.';
         if (type === 'Videos' && !(db.settings.multimediaExtensions || ['mp4', 'webm']).includes(ext)) return 'Video format is not approved. Default video formats are MP4 and WEBM.';
         if (!file.size) return 'Empty files cannot be uploaded.';
         return ''
@@ -4180,7 +4180,7 @@
     }
 
     function contentItems() {
-        return contentScope().filter(r => (contentTab === 'ALL' || contentCategory(r) === contentTab) && (!contentSearch || R.norm(r.name + ' ' + r.filename).includes(R.norm(contentSearch))))
+        return contentScope().filter(r => (contentTab === 'ALL' || contentCategory(r) === contentTab) && (!contentSearch || R.norm(r.name + ' ' + r.filename + ' ' + contentTags(r).join(' ')).includes(R.norm(contentSearch))))
     }
 
     function contentSize(size) {
@@ -4192,41 +4192,48 @@
             ext = r.filename.split('.').pop().toUpperCase(),
             sample = (window.CONTENT_SAMPLES || []).find(s => s.id === r.id),
             poster = (window.CONTENT_SAMPLES || []).find(s => s.id === 'CONTENT-SAMPLE-PNG');
-        if (type === 'Images' && sample) return '<div class="library-cover library-image"><img src="data:' + esc(sample.mime) + ';base64,' + sample.base64 + '" alt="' + esc(r.name) + '" loading="lazy"><span class="format-tag">' + esc(ext) + '</span></div>';
+        if (type === 'Others' && ['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext.toLowerCase()) && sample) return '<div class="library-cover library-images"><img src="data:' + esc(sample.mime) + ';base64,' + sample.base64 + '" alt="' + esc(r.name) + '" loading="lazy"><span class="format-tag">' + esc(ext) + '</span></div>';
         if (type === 'Videos') return '<div class="library-cover library-video">' + (r.sampleContent && poster ? '<img src="data:' + poster.mime + ';base64,' + poster.base64 + '" alt="">' : '') + '<span class="video-play" aria-hidden="true">▶</span><span class="format-tag">' + esc(ext) + '</span></div>';
-        return '<div class="library-cover library-' + type.toLowerCase() + '"><div class="library-document" aria-hidden="true"><span>' + esc(ext) + '</span><i></i><i></i><i></i></div><span class="format-tag">' + esc(ext) + '</span></div>'
+        let coverClass = type === 'PDF_MANUALS' ? 'pdf' : type === 'Presentations' ? 'pptx' : ['PNG', 'JPG', 'JPEG', 'WEBP', 'GIF'].includes(ext) ? 'images' : ext === 'DOCX' ? 'docx' : ['BPMN', 'DRAWIO', 'WORKFLOW', 'JSON'].includes(ext) ? 'workflow' : 'document';
+        return '<div class="library-cover library-' + coverClass + '"><div class="library-document" aria-hidden="true"><span>' + esc(ext) + '</span><i></i><i></i><i></i></div><span class="format-tag">' + esc(ext) + '</span></div>'
+    }
+
+    function contentTags(record) {
+        let category = contentCategory(record),
+            ext = String(record.filename || '').split('.').pop().toUpperCase(),
+            isImage = ['PNG', 'JPG', 'JPEG', 'WEBP', 'GIF'].includes(ext),
+            isWorkflow = ['BPMN', 'DRAWIO', 'WORKFLOW', 'JSON'].includes(ext),
+            inferred = category === 'Videos' ? ['Video', 'Training'] : category === 'PDF_MANUALS' ? ['Manual', 'Reference'] : category === 'Presentations' ? ['Presentation', 'Training'] : isImage ? ['Image', 'Classroom'] : isWorkflow ? ['Workflow', 'Process'] : ['Document', 'Learning resource'],
+            words = String(record.name || '').split(/[^a-z0-9]+/i).filter(word => word.length > 2 && !['sample', 'file'].includes(word.toLowerCase()));
+        return [...new Set([...(Array.isArray(record.tags) ? record.tags : []), ...inferred, ext, ...words.slice(0, 2)])].slice(0, 4)
     }
 
     function contentGrid() {
         let rows = contentItems();
         if (!rows.length) return '<div class="library-empty"><h2>No files found</h2><p>Try another tab or search, or use Bulk upload to add content.</p></div>';
         return '<div class="content-grid">' + rows.map(r => {
-            let type = contentCategory(r);
-            return '<article class="card content-card">' + contentCover(r) + '<div class="library-card-body"><div class="library-card-meta"><span>' + esc({
-                PPTx: 'Presentation',
-                Docx: 'Document',
-                PDF: 'PDF manual',
-                Videos: 'Video',
-                Images: 'Image'
-            } [type]) + '</span><span>' + contentSize(r.size) + '</span></div><h2>' + esc(r.name) + '</h2><p class="library-filename" title="' + esc(r.filename) + '">' + esc(r.filename) + '</p><div class="library-scope">' + (r.sampleContent ? '<span class="library-sample">Sample</span>' : '') + '<span>' + esc(r.common ? 'Common library' : lookup(db.projects, r.project)) + '</span></div><div class="actions">' + (type === 'Images' || type === 'Videos' || type === 'PDF' ? btn('Preview', 'contentPreview', r.id, 'btn library-preview') : '') + btn('Download', 'contentDownload', r.id, 'btn library-download') + '</div></div></article>'
+            let type = contentCategory(r),
+                ext = r.filename.split('.').pop().toUpperCase(),
+                kind = type === 'PDF_MANUALS' ? 'PDF & Manual' : type === 'Presentations' ? 'Presentation' : type === 'Videos' ? 'Video' : ['BPMN', 'DRAWIO', 'WORKFLOW', 'JSON'].includes(ext) ? 'Workflow' : ['PNG', 'JPG', 'JPEG', 'WEBP', 'GIF'].includes(ext) ? 'Image' : 'Document',
+                tags = contentTags(r);
+            return '<article class="card content-card">' + contentCover(r) + '<div class="library-card-body"><div class="library-card-meta"><span>' + esc(kind) + '</span><span>' + contentSize(r.size) + '</span></div><h2>' + esc(r.name) + '</h2><p class="library-filename" title="' + esc(r.filename) + '">' + esc(r.filename) + '</p><div class="library-tags" aria-label="Tags">' + tags.map(tag => '<span class="library-tag">' + esc(tag) + '</span>').join('') + '</div><div class="library-scope">' + (r.sampleContent ? '<span class="library-sample">Sample</span>' : '') + '<span>' + esc(r.common ? 'Common library' : lookup(db.projects, r.project)) + '</span></div><div class="actions">' + btn('Preview', 'contentPreview', r.id, 'btn library-preview') + btn('Download', 'contentDownload', r.id, 'btn library-download') + '</div></div></article>'
         }).join('') + '</div>'
     }
 
     function contentTabBar() {
         let labels = {
-            ALL: 'ALL',
+            ALL: 'All',
             Videos: 'Videos',
-            PPTx: 'Presentations',
-            PDF: 'PDF',
-            Docx: 'Documents',
-            Images: 'Images'
+            PDF_MANUALS: 'PDF & Manuals',
+            Presentations: 'Presentations',
+            Others: 'Others'
         };
         return '<div class="nav nav-tabs content-tabs" role="tablist" aria-label="Content format">' + contentTabs.map(type => '<button type="button" role="tab" id="content-tab-' + type + '" aria-controls="contentGrid" aria-selected="' + (contentTab === type) + '" class="nav-link ' + (contentTab === type ? 'active' : '') + '" data-action="contentTab" data-id="' + type + '">' + labels[type] + ' <span class="badge">' + contentScope().filter(r => type === 'ALL' || contentCategory(r) === type).length + '</span></button>').join('') + '</div>'
     }
     views.content = function() {
         let rows = contentScope(),
             bytes = rows.reduce((a, r) => a + Number(r.size || 0), 0);
-        return '<div class="library-page">' + head('Content Library', 'Your teaching materials, together in one place.', canUploadResources() ? btn('Bulk upload files', 'contentUpload', '', 'btn-primary') : '') + '<div class="library-summary"><div><span>Total files</span><strong>' + rows.length + '</strong></div><div><span>Content formats</span><strong>' + new Set(rows.map(r => r.filename.split('.').pop().toLowerCase())).size + '</strong></div><div><span>Library size</span><strong>' + contentSize(bytes) + '</strong></div><p>Videos, presentations, PDF manuals,<br>documents and classroom images.</p></div><div class="library-browser"><div class="library-browser-head"><div><h2>Browse content</h2><p>Filter by format or find a file by name.</p></div><div class="library-search"><label for="contentSearch">Search content</label><input id="contentSearch" type="search" value="' + esc(contentSearch) + '" placeholder="Search file name or title"></div></div><div id="contentTabs">' + contentTabBar() + '</div><div class="library-results"><span id="contentCount">' + contentItems().length + ' files</span><span>Sample files are labelled</span></div><section id="contentGrid" role="tabpanel" aria-labelledby="content-tab-' + contentTab + '">' + contentGrid() + '</section></div><p class="library-note">Content Library files are stored independently. Assign training resources through Learning Resources.</p></div>'
+        return '<div class="library-page">' + head('Content Library', 'Find training videos, manuals, presentations and other learning resources.', canUploadResources() ? btn('Bulk upload files', 'contentUpload', '', 'btn-primary') : '') + '<div class="library-summary"><div><span>Total files</span><strong>' + rows.length + '</strong></div><div><span>Content formats</span><strong>' + new Set(rows.map(r => r.filename.split('.').pop().toLowerCase())).size + '</strong></div><div><span>Library size</span><strong>' + contentSize(bytes) + '</strong></div><p>Videos, PDF manuals, presentations,<br>documents, workflows and images.</p></div><div class="library-browser"><div class="library-browser-head"><div><h2>Browse content</h2><p>Choose a category or search by file name, title, or tag.</p></div><div class="library-search"><label for="contentSearch">Search content</label><input id="contentSearch" type="search" value="' + esc(contentSearch) + '" placeholder="Search name, title, or tag"></div></div><div id="contentTabs">' + contentTabBar() + '</div><div class="library-results"><span id="contentCount">' + contentItems().length + ' files</span><span>Preview or download any card</span></div><section id="contentGrid" role="tabpanel" aria-labelledby="content-tab-' + contentTab + '">' + contentGrid() + '</section></div><p class="library-note">Content Library files are stored independently. Assign training resources through Learning Resources.</p></div>'
     };
 
     function refreshContent() {
@@ -4245,7 +4252,7 @@
     function openContentUpload() {
         if (!canUploadResources()) return deny();
         contentStage = null;
-        modal('Bulk upload · Content Library', info('Choose multiple files together. Review all file types and duplicate checks before saving. Files are stored in this browser; nothing is added automatically to Learning Resources.') + '<div class="form-grid">' + (central() ? '<label>Library scope<select id="contentCommon"><option value="yes">Common library</option><option value="no">Project-specific</option></select></label>' : '<input type="hidden" id="contentCommon" value="no">') + '<label>Project (required for project-specific files)<select id="contentProject">' + options(projects(), context === 'all' ? '' : context) + '</select></label></div><label for="contentFiles">Select files · multiple selection supported</label><input id="contentFiles" type="file" multiple accept=".mp4,.webm,.mov,.m4v,.avi,.mpeg,.mpg,.ppt,.pptx,.pdf,.docx,.png,.jpg,.jpeg"><div class="toolbar">' + btn('Validate files', 'contentValidate') + '</div><div id="contentUploadPreview" role="status"></div><div class="form-actions">' + btn('Save bulk upload', 'contentSave', '', 'btn-primary') + '</div>')
+        modal('Bulk upload · Content Library', info('Choose multiple files together. Review all file types and duplicate checks before saving. Files are stored in this browser; nothing is added automatically to Learning Resources.') + '<div class="form-grid">' + (central() ? '<label>Library scope<select id="contentCommon"><option value="yes">Common library</option><option value="no">Project-specific</option></select></label>' : '<input type="hidden" id="contentCommon" value="no">') + '<label>Project (required for project-specific files)<select id="contentProject">' + options(projects(), context === 'all' ? '' : context) + '</select></label></div><label for="contentFiles">Select files · multiple selection supported</label><input id="contentFiles" type="file" multiple accept=".mp4,.webm,.mov,.m4v,.avi,.mpeg,.mpg,.ppt,.pptx,.pdf,.docx,.bpmn,.drawio,.workflow,.json,.png,.jpg,.jpeg,.webp,.gif"><div class="toolbar">' + btn('Validate files', 'contentValidate') + '</div><div id="contentUploadPreview" role="status"></div><div class="form-actions">' + btn('Save bulk upload', 'contentSave', '', 'btn-primary') + '</div>')
     }
 
     function validateContentFiles(files, common, project) {
@@ -4356,14 +4363,24 @@
             if (!contentScope().some(r => r.id === id)) return deny();
             if (!blob) throw Error('File bytes are missing in this browser.');
             if (preview) {
-                let type = contentCategory(r);
-                if (!['Images', 'Videos', 'PDF'].includes(type)) return;
-                let mime = type === 'PDF' ? 'application/pdf' : type === 'Images' ? 'image/' + (r.filename.toLowerCase().endsWith('.png') ? 'png' : 'jpeg') : blob.type || 'video/' + (r.filename.toLowerCase().endsWith('.webm') ? 'webm' : 'mp4');
+                let type = contentCategory(r),
+                    ext = r.filename.split('.').pop().toLowerCase(),
+                    isImage = type === 'Others' && ['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext),
+                    isPdf = type === 'PDF_MANUALS',
+                    mime = isPdf ? 'application/pdf' : isImage ? blob.type || 'image/' + (ext === 'jpg' ? 'jpeg' : ext) : type === 'Videos' ? blob.type || 'video/' + (ext === 'webm' ? 'webm' : 'mp4') : blob.type || 'application/octet-stream';
                 let url = URL.createObjectURL(new Blob([blob], {
                     type: mime
                 }));
-                modal(r.name, (type === 'PDF' ? '<div class="pdf-viewer-toolbar"><span>PDF Viewer</span><a class="btn library-download" href="' + url + '" download="' + esc(r.filename) + '">Download PDF</a><a class="btn library-preview" href="' + url + '" target="_blank" rel="noopener">Open in new tab</a></div><iframe class="content-preview-pdf" src="' + url + '" title="PDF preview: ' + esc(r.name) + '"></iframe>' : type === 'Images' ? '<img class="content-preview-image" src="' + url + '" alt="' + esc(r.name) + '">' : '<video class="content-preview-video" controls src="' + url + '"></video>') + info(type === 'PDF' ? 'The browser PDF viewer provides page navigation, zoom and print where supported. If it does not display, use Download PDF or Open in new tab.' : 'Preview support depends on the browser and video codec. Download retains the original file.'));
-                $id('editor').classList.toggle('pdf-preview-dialog', type === 'PDF');
+                let previewBody;
+                if (isPdf) previewBody = '<div class="pdf-viewer-toolbar"><span>PDF Viewer</span><a class="btn library-download" href="' + url + '" download="' + esc(r.filename) + '">Download</a><a class="btn library-preview" href="' + url + '" target="_blank" rel="noopener">Open in new tab</a></div><iframe class="content-preview-pdf" src="' + url + '" title="PDF preview: ' + esc(r.name) + '"></iframe>';
+                else if (isImage) previewBody = '<img class="content-preview-image" src="' + url + '" alt="' + esc(r.name) + '">';
+                else if (type === 'Videos') previewBody = '<video class="content-preview-video" controls src="' + url + '"></video>';
+                else {
+                    let text = await contentTextPreview(r, blob), tags = contentTags(r).map(tag => '<span class="library-tag">' + esc(tag) + '</span>').join('');
+                    previewBody = '<div class="content-office-preview"><div class="content-office-heading"><div class="library-document" aria-hidden="true"><span>' + esc(ext.toUpperCase()) + '</span><i></i><i></i><i></i></div><div><h3>' + esc(r.name) + '</h3><p>' + esc(r.filename) + '</p><div class="library-tags">' + tags + '</div></div></div>' + (text ? '<pre class="content-text-preview">' + esc(text) + '</pre>' : '<p class="content-preview-empty">This file is ready to preview. Download it to open the full document in a compatible app.</p>') + '<a class="btn library-download" href="' + url + '" download="' + esc(r.filename) + '">Download original file</a></div>';
+                }
+                modal(r.name, previewBody + (isPdf ? info('The browser PDF viewer provides page navigation, zoom and print where supported. Use Download or Open in new tab if it does not display.') : type === 'Videos' ? info('Preview support depends on the browser and video codec. Download retains the original file.') : ''));
+                $id('editor').classList.toggle('pdf-preview-dialog', isPdf);
                 $id('editor').addEventListener('close', () => {
                     $id('editor').classList.remove('pdf-preview-dialog');
                     URL.revokeObjectURL(url)
@@ -4375,6 +4392,34 @@
             message('Content could not be opened: ' + error.message, true)
         }
     }
+
+    async function contentTextPreview(record, blob) {
+        let ext = record.filename.split('.').pop().toLowerCase();
+        if (['docx', 'pptx'].includes(ext) && window.JSZip) {
+            try {
+                let zip = await window.JSZip.loadAsync(blob), names = Object.keys(zip.files).filter(name => ext === 'docx' ? name === 'word/document.xml' : /^ppt\/slides\/slide\d+\.xml$/.test(name)).sort(), chunks = [];
+                for (let name of names.slice(0, 20)) {
+                    let xml = await zip.files[name].async('string'), doc = new DOMParser().parseFromString(xml, 'application/xml'), parts = [...doc.getElementsByTagName('*')].filter(node => node.localName === 't').map(node => node.textContent).filter(Boolean);
+                    if (parts.length) chunks.push((ext === 'pptx' ? name.split('/').pop().replace('.xml', '').replace('slide', 'Slide ') + '\n' : '') + parts.join(' '));
+                }
+                return chunks.join('\n\n').slice(0, 12000)
+            } catch { return '' }
+        }
+        if (ext === 'json') {
+            let raw = await blob.text();
+            try { return JSON.stringify(JSON.parse(raw), null, 2).slice(0, 12000) } catch { return raw.slice(0, 12000) }
+        }
+        if (['bpmn', 'drawio', 'workflow'].includes(ext)) {
+            let raw = await blob.text();
+            if (raw.trim().startsWith('<')) {
+                let doc = new DOMParser().parseFromString(raw, 'application/xml');
+                if (!doc.querySelector('parsererror')) return [...doc.getElementsByTagName('*')].map(node => node.textContent?.trim()).filter((value, index, all) => value && value.length < 500 && all.indexOf(value) === index).join('\n').slice(0, 12000)
+            }
+            return raw.slice(0, 12000)
+        }
+        return ''
+    }
+
     const priorContentAct = act;
     act = async function(action, id) {
         switch (action) {
