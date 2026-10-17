@@ -13,10 +13,13 @@ with tempfile.TemporaryDirectory() as folder:
  source=script.read_text();(root/'setup-assets.py').write_text(source)
  urls=['https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css','https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js','https://code.jquery.com/jquery-4.0.0.min.js']
  original='\n'.join(urls);(root/'index.html').write_text(original)
- def fetch(url,timeout):return Response(b'wOF2 fixture' if url.endswith('woff2') else b'wOFF fixture' if url.endswith('woff') else b'bootstrap-icons fixture' if 'bootstrap-icons' in url else b'/*! Bootstrap  v5.3.8 */ fixture' if 'bootstrap' in url else b'/*! jQuery v4.0.0 */ fixture')
+ def fetch(url,timeout):
+  url=url.full_url if isinstance(url,urllib.request.Request) else url
+  if 'bootstrap' in url:return Response(b'/*! Bootstrap v5.3.8 */'+b' '*100000)
+  return Response(b'/*! jQuery v4.0.0 */'+b' '*50000)
  with patch.object(urllib.request,'urlopen',fetch):runpy.run_path(str(root/'setup-assets.py'),run_name='__main__')
  assert 'assets/vendor/bootstrap-5.3.8.min.css' in (root/'index.html').read_text()
- assert len([p for p in (root/'assets/vendor').rglob('*') if p.is_file()])==6
+ assert len([p for p in (root/'assets/vendor').rglob('*') if p.is_file()])==3
  (root/'index.html').write_text(original)
  with patch.object(urllib.request,'urlopen',lambda *args,**kwargs:Response(b'Unexpected response')):
   try:runpy.run_path(str(root/'setup-assets.py'),run_name='__main__')

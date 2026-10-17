@@ -1,0 +1,12 @@
+{
+  "name": "product-demo-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node serve.mjs",
+    "vo": "node py.mjs vo.py",
+    "render": "node render.mjs out/video-silent.mp4",
+    "mix": "node py.mjs mix.py out/video-silent.mp4 out/video.mp4"
+  },
+  "dependencies": { "playwright": "1.56.1", "three": "0.170.0" }
+}

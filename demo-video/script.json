@@ -1,0 +1,18 @@
+{
+  "title": "ERNet Training Dashboard",
+  "layout": "sequence",
+  "loop": false,
+  "voice": "en-US-AvaMultilingualNeural",
+  "logo": "assets/logo.png",
+  "background": "grid",
+  "progress": "pill",
+  "music": "pad",
+  "sfx": ["whoosh", "hit"],
+  "steps": [
+    { "id": "opener", "kind": "scene", "line": "Project sponsor Maya needs a clear view of training progress across locations.", "extra": 1 },
+    { "id": "audience", "kind": "scene", "title": "One dashboard, two audiences", "line": "The audience toggle switches between teacher and student figures, each with its own training plan and progress.", "extra": 1 },
+    { "id": "phases", "kind": "scene", "title": "Follow the training phases", "line": "Each phase shows its duration, status, and planned start date. Select a phase to focus the dashboard.", "extra": 1 },
+    { "id": "locations", "kind": "scene", "title": "Review progress by location", "line": "Follow the location table from states through districts and blocks to individual schools.", "extra": 1 },
+    { "id": "closing", "kind": "scene", "line": "ERNet training dashboard. Review phases, participation, and location progress in one place." }
+  ]
+}

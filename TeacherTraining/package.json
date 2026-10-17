@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "playwright": "^1.64.1"
+  },
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "test:setup-assets": "python tests/setup-assets.test.py",
+    "test:all": "npm test && npm run test:setup-assets"
+  }
+}
