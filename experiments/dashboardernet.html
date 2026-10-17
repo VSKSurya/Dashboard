@@ -310,6 +310,8 @@
       return {index,id:`B-${String(1001+index).padStart(4,'0')}`,status,phase:batchPhases[index%batchPhases.length],stateIndex,districtIndex,blockIndex,schoolIndex,district,state,block,school,location:`${district}, ${state}`,trainer:batchTrainers[index%batchTrainers.length],teacherParticipants,studentParticipants,participants,attendance,completion,attendedParticipants:Math.round(participants*attendance/100),completedParticipants:Math.round(participants*completion/100),date};
   });
   let selectedAudience='Teacher';
+  let selectedPhase=null;
+  const dashboardBatches=()=>selectedPhase?batchData.filter(batch=>batch.phase===selectedPhase):batchData;
   const audienceSize=(batch,audience=selectedAudience)=>audience==='Teacher'?batch.teacherParticipants:batch.studentParticipants;
   function audienceMetrics(batch,audience=selectedAudience){
     const planned=audienceSize(batch,audience),registered=batch.status==='upcoming'?Math.round(planned*(audience==='Teacher'?.95:.91)):planned;
@@ -326,16 +328,18 @@
   const batchPageSize=24;
   let activeBatchStatus='upcoming',batchPage=1,activeStatusTrigger=null,activeBatchTrigger=null,selectedBatch=null;
   function renderBatchStatusTotals(){
+    const batchesInView=dashboardBatches();
     const audienceLabel=selectedAudience==='Teacher'?'teachers':'students';
-    document.querySelector('.page-title p').textContent=`Track ${audienceLabel} training progress, attendance, and participation.`;
-    const totals=batchData.reduce((sum,batch)=>{const m=audienceMetrics(batch);for(const key of Object.keys(sum))sum[key]+=m[key];return sum},{planned:0,registered:0,approved:0,attended:0,completed:0,certified:0});
+    const phaseContext=selectedPhase?` for ${selectedPhase}`:'';
+    document.querySelector('.page-title p').textContent=`Track ${audienceLabel} training progress, attendance, and participation${phaseContext}.`;
+    const totals=batchesInView.reduce((sum,batch)=>{const m=audienceMetrics(batch);for(const key of Object.keys(sum))sum[key]+=m[key];return sum},{planned:0,registered:0,approved:0,attended:0,completed:0,certified:0});
     const totalParticipants=totals.planned,totalAttended=totals.attended,totalCompleted=totals.completed;
     const completionPercent=totalParticipants?totalCompleted/totalParticipants*100:0;
     const attendancePercent=totals.registered?totalAttended/totals.registered*100:0;
     for(const status of Object.keys(batchStatusLabels)){
-      const batches=batchData.filter(batch=>batch.status===status);
-      const participantCount=batches.reduce((sum,batch)=>sum+audienceSize(batch),0);
-      document.querySelector(`[data-status-count="${status}"]`).textContent=batches.length.toLocaleString('en-IN');
+      const matchingBatches=batchesInView.filter(batch=>batch.status===status);
+      const participantCount=matchingBatches.reduce((sum,batch)=>sum+audienceSize(batch),0);
+      document.querySelector(`[data-status-count="${status}"]`).textContent=matchingBatches.length.toLocaleString('en-IN');
       document.querySelector(`[data-participant-total="${status}"]`).textContent=`${participantCount.toLocaleString('en-IN')} participants`;
       const counterCopy=document.querySelector(`[data-batch-status="${status}"] .counter-copy`);
       let audienceBreakdown=counterCopy.querySelector('.counter-audience');
@@ -351,13 +355,13 @@
     const formattedParticipants=totalParticipants.toLocaleString('en-IN'),trainedText=totalCompleted.toLocaleString('en-IN');
     updateKpi('Training Progress',`${completionPercent.toFixed(1)}%`,null);
     document.querySelector('.kpi-sub .meter span').style.width=`${completionPercent}%`;
-    updateKpi('Target Participants',formattedParticipants,`${selectedAudience} target across all 16 states`);
+    updateKpi('Target Participants',formattedParticipants,`${selectedAudience} target across 16 states${phaseContext}`);
     updateKpi('Participants Registered',totals.registered.toLocaleString('en-IN'),`${selectedAudience} registrations`);
     updateKpi('Participants Trained',trainedText,`${completionPercent.toFixed(1)}% of ${selectedAudience.toLowerCase()} target`);
     updateKpi('Attendance Rate',`${attendancePercent.toFixed(1)}%`,`${selectedAudience} attendance`);
-    updateKpi('Active Batches',batchData.filter(batch=>batch.status==='ongoing').length.toLocaleString('en-IN'),'Across all locations');
-    updateKpi('Completed Batches',batchData.filter(batch=>batch.status==='completed').length.toLocaleString('en-IN'),'Across all locations');
-    updateKpi('Upcoming Batches',batchData.filter(batch=>batch.status==='upcoming').length.toLocaleString('en-IN'),'Across all locations');
+    updateKpi('Active Batches',batchesInView.filter(batch=>batch.status==='ongoing').length.toLocaleString('en-IN'),selectedPhase||'Across all locations');
+    updateKpi('Completed Batches',batchesInView.filter(batch=>batch.status==='completed').length.toLocaleString('en-IN'),selectedPhase||'Across all locations');
+    updateKpi('Upcoming Batches',batchesInView.filter(batch=>batch.status==='upcoming').length.toLocaleString('en-IN'),selectedPhase||'Across all locations');
     const progressValues=[totals.planned,totals.registered,totals.approved,totals.attended,totals.completed,totals.certified];
     document.querySelectorAll('#training-progress .progress-row').forEach((row,index)=>{
       const value=progressValues[index],percent=totalParticipants?value/totalParticipants*100:0;
@@ -394,10 +398,10 @@
   }
   function renderBatchModal(){
     const search=document.querySelector('#batch-search').value.trim().toLocaleLowerCase();
-    const matches=batchData.filter(batch=>batch.status===activeBatchStatus&&(!search||`${batch.id} ${batch.phase} ${batch.location} ${batch.school} ${batch.trainer}`.toLocaleLowerCase().includes(search)));
+    const matches=dashboardBatches().filter(batch=>batch.status===activeBatchStatus&&(!search||`${batch.id} ${batch.phase} ${batch.location} ${batch.school} ${batch.trainer}`.toLocaleLowerCase().includes(search)));
     const pageCount=Math.max(1,Math.ceil(matches.length/batchPageSize));batchPage=Math.min(batchPage,pageCount);
     const start=(batchPage-1)*batchPageSize,visible=matches.slice(start,start+batchPageSize);
-    document.querySelector('#batch-modal-title').textContent=`${selectedAudience} ${batchStatusLabels[activeBatchStatus].toLowerCase()} batches`;
+    document.querySelector('#batch-modal-title').textContent=`${selectedAudience} ${selectedPhase?`${selectedPhase} · `:''}${batchStatusLabels[activeBatchStatus].toLowerCase()} batches`;
     document.querySelector('#batch-modal-summary').textContent=`${matches.length.toLocaleString('en-IN')} assigned batches · ${matches.reduce((sum,batch)=>sum+audienceSize(batch),0).toLocaleString('en-IN')} ${selectedAudience.toLowerCase()} participants`;
     document.querySelector('#batch-page-info').textContent=matches.length?`Showing ${(start+1).toLocaleString('en-IN')}–${Math.min(start+batchPageSize,matches.length).toLocaleString('en-IN')} of ${matches.length.toLocaleString('en-IN')} batches · Page ${batchPage} of ${pageCount}`:'No matching batches';
     document.querySelector('#batch-page-prev').disabled=batchPage<=1;
@@ -486,7 +490,7 @@
   batchData.forEach(batch=>locationTree[batch.stateIndex].children[batch.districtIndex].children[batch.blockIndex].children[batch.schoolIndex].assignedBatches.push(batch));
   function locationTotals(node){
     if(!node.children.length){
-      const batches=node.assignedBatches,completedBatches=batches.filter(batch=>batch.status==='completed').length;
+      const batches=node.assignedBatches.filter(batch=>!selectedPhase||batch.phase===selectedPhase),completedBatches=batches.filter(batch=>batch.status==='completed').length;
       const metrics=batches.reduce((sum,batch)=>{const current=audienceMetrics(batch);for(const key of ['planned','registered','completed'])sum[key]+=current[key];return sum},{planned:0,registered:0,completed:0});
       return {batches:batches.length,scheduled:batches.length,ongoing:batches.filter(batch=>batch.status==='ongoing').length,notStarted:batches.filter(batch=>batch.status==='upcoming').length,completedBatches,plannedUsers:metrics.planned,registeredUsers:metrics.registered,completedUsers:metrics.completed};
     }
@@ -497,7 +501,8 @@
   function renderLocations(){
     const level=locationPath.length,nodes=level===0?locationTree:locationPath[level-1].children;
     document.querySelector('#location-level-heading').textContent=locationLabels[level];
-    document.querySelector('#location-context').textContent=locationPath.length?`${locationPath.map(node=>node.name).join(' · ')} · ${selectedAudience} view`:`All 16 states · 750 batches · ${batchData.reduce((sum,batch)=>sum+audienceSize(batch),0).toLocaleString('en-IN')} ${selectedAudience.toLowerCase()} participants`;
+    const phaseContext=selectedPhase?` · ${selectedPhase}`:'';
+    document.querySelector('#location-context').textContent=locationPath.length?`${locationPath.map(node=>node.name).join(' · ')} · ${selectedAudience} view${phaseContext}`:`All 16 states · ${dashboardBatches().length.toLocaleString('en-IN')} batches · ${dashboardBatches().reduce((sum,batch)=>sum+audienceSize(batch),0).toLocaleString('en-IN')} ${selectedAudience.toLowerCase()} participants${phaseContext}`;
     const breadcrumb=document.querySelector('#location-breadcrumb');
     const crumbs=[...locationPath.map((node,index)=>({label:locationLabels[index],index})),{label:locationLabels[level],index:level}];
     breadcrumb.innerHTML=crumbs.map((crumb,index)=>`<li><button type="button" class="location-crumb" data-crumb-depth="${crumb.index}" ${index===crumbs.length-1?'aria-current="page"':''}>${crumb.label}</button></li>`).join('');
@@ -549,11 +554,17 @@
   if(window.matchMedia('(max-width: 900px) and (min-width: 621px)').matches)setSidebarCollapsed(true);
   collapseButton.addEventListener('click',()=>setSidebarCollapsed(!appRoot.classList.contains('is-collapsed')));
   function selectPhase(phase){
+    const phaseName=phase.querySelector('h3').textContent.trim();
+    selectedPhase=selectedPhase===phaseName?null:phaseName;
     document.querySelectorAll('.phase-card').forEach(card=>{
-      const selected=card===phase;
+      const selected=selectedPhase!==null&&card.querySelector('h3').textContent.trim()===selectedPhase;
       card.classList.toggle('selected',selected);
       card.setAttribute('aria-pressed',String(selected));
     });
+    renderBatchStatusTotals();
+    renderLocations();
+    if(!batchModalLayer.hidden)renderBatchModal();
+    if(!participantModalLayer.hidden&&selectedBatch)openParticipantModal(selectedBatch,activeBatchTrigger);
   }
   document.querySelectorAll('.phase-card').forEach(phase=>{
     phase.addEventListener('click',()=>selectPhase(phase));
