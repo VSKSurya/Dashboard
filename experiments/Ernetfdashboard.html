@@ -415,7 +415,7 @@
     document.querySelector('#batch-page-info').textContent=matches.length?`Showing ${(start+1).toLocaleString('en-IN')}–${Math.min(start+batchPageSize,matches.length).toLocaleString('en-IN')} of ${matches.length.toLocaleString('en-IN')} batches · Page ${batchPage} of ${pageCount}`:'No matching batches';
     document.querySelector('#batch-page-prev').disabled=batchPage<=1;
     document.querySelector('#batch-page-next').disabled=batchPage>=pageCount;
-    batchModalList.innerHTML=visible.length?visible.map(batch=>`<button class="modal-batch-item" type="button" data-batch-index="${batch.index}" aria-label="Open ${selectedAudience.toLowerCase()} participants for ${batch.id}, ${audienceSize(batch)} participants"><span class="modal-batch-main"><span class="modal-batch-id">${batch.id}<span class="modal-status-tag ${batch.status}">${batchStatusLabels[batch.status]}</span></span><span class="modal-batch-name">Phase ${batch.phaseNumber}: ${batch.phase}</span><span class="modal-batch-location">${batch.school} · ${batch.location}</span><span class="batch-modal-breakdown">Trainer Name: ${batch.trainer} · Batch Start Date: ${batch.date}</span></span><span class="modal-batch-stats"><strong>${audienceSize(batch).toLocaleString('en-IN')}</strong><span>${selectedAudience.toLowerCase()} participants</span></span></button>`).join(''):'<div class="modal-empty">No batches match your search. Try a batch ID, school, location, or trainer.</div>';
+    batchModalList.innerHTML=visible.length?visible.map(batch=>`<button class="modal-batch-item" type="button" data-batch-index="${batch.index}" aria-label="Open ${selectedAudience.toLowerCase()} participants for ${batch.id}, ${audienceSize(batch)} participants"><span class="modal-batch-main"><span class="modal-batch-id">${batch.id}<span class="modal-status-tag ${batch.status}">${batchStatusLabels[batch.status]}</span></span><span class="modal-batch-name">${batch.phase}</span><span class="modal-batch-location">${batch.school} · ${batch.location}</span><span class="batch-modal-breakdown">Trainer Name: ${batch.trainer} · Batch Start Date: ${batch.date}</span></span><span class="modal-batch-stats"><strong>${audienceSize(batch).toLocaleString('en-IN')}</strong><span>${selectedAudience.toLowerCase()} participants</span></span></button>`).join(''):'<div class="modal-empty">No batches match your search. Try a batch ID, school, location, or trainer.</div>';
   }
   function openBatchModal(status,trigger){
     activeBatchStatus=status;activeStatusTrigger=trigger;batchPage=1;
@@ -455,7 +455,7 @@
   }
   function openParticipantModal(batch,trigger){
     selectedBatch=batch;activeBatchTrigger=trigger;activeParticipantRows=participantRowsFor(batch);
-    document.querySelector('#participant-modal-title').textContent=`${batch.id} ${selectedAudience.toLowerCase()} participants`;
+    document.querySelector('#participant-modal-title').textContent=`Phase ${batch.phaseNumber} · ${batch.id} ${selectedAudience.toLowerCase()} participants`;
     document.querySelector('#participant-modal-summary').textContent=`Phase ${batch.phaseNumber}: ${batch.phase} · ${batch.school} · ${batch.location} · ${selectedAudience} participants · Trainer ${batch.trainer}`;
     document.querySelector('#participant-search').value='';
     const metrics=audienceMetrics(batch),attended=metrics.attended,completed=activeParticipantRows.filter(person=>person.state==='Completed').length;
