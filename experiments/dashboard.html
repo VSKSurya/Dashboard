@@ -28,6 +28,16 @@
     @media(max-width:380px){.main{padding-inline:8px}.page-title h1{font-size:17px}.page-title p{max-width:215px}.top-actions .notification{display:none}.filter select{padding-left:6px}.progress-row{grid-template-columns:65px minmax(45px,1fr) 86px}.batch-counter{gap:4px;padding:7px 4px}.counter-copy span{font-size:8px}}
     .sidebar .brand-logo{display:block;width:min(155px,100%);height:auto;max-height:48px;object-fit:contain}
     @media(max-width:900px){.sidebar .brand{display:none}}
+
+    .side-group{position:relative;min-width:0}
+    .side-group>summary{list-style:none;cursor:pointer}
+    .side-group>summary::-webkit-details-marker{display:none}
+    .side-group>summary .side-group-chevron{width:13px;height:13px;margin-left:auto;flex:0 0 auto;transition:transform .16s}
+    .side-group[open]>summary .side-group-chevron{transform:rotate(180deg)}
+    .side-submenu{display:grid;gap:3px;margin:4px 0 5px 31px;padding-left:10px;border-left:1px solid #ffffff35}
+    .side-submenu a{display:block;padding:7px 8px;border-radius:6px;color:#c1d5e9;text-decoration:none;font-size:11px;line-height:1.25}
+    .side-submenu a:hover,.side-submenu a:focus-visible{background:#ffffff12;color:#fff}
+    @media(max-width:900px){.side-group>summary .side-group-chevron{display:none}.side-group[open] .side-submenu{position:absolute;z-index:8;top:0;left:calc(100% + 7px);width:190px;margin:0;padding:7px;border:1px solid #ffffff26;border-radius:9px;background:#153f6c;box-shadow:0 8px 20px #071e3750}}
   </style>
 </head>
 <body>
@@ -45,7 +55,7 @@
       <a class="side-link" href="#locations"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7.5h7l2 2h9v10a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5v-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3.5 7.5V5A1.5 1.5 0 0 1 5 3.5h5l2 2h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Resources</span></a>
       <a class="side-link" href="#effectiveness"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5h14a1.5 1.5 0 0 1 1.5 1.5v14a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V5A1.5 1.5 0 0 1 5 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M7.5 8h9m-9 4h9m-9 4h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Assessments</span></a>
       <a class="side-link" href="#effectiveness"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 2.5 8 3v5.8c0 5-3.4 8.5-8 10.2-4.6-1.7-8-5.2-8-10.2V5.5l8-3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m8.5 11.5 2.2 2.2 4.8-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Certificates</span></a>
-      <a class="side-link" href="#locations"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8m-8 4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Reports</span></a>
+      <details class="side-group"><summary class="side-link"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8m-8 4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>MIS Reports</span><svg class="side-group-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><div class="side-submenu" role="group" aria-label="MIS Reports"><a href="#batch-status">Batch Performance</a><a href="#training-progress">Training Summary</a><a href="#attendance">Attendance Report</a><a href="#effectiveness">Feedback Report</a></div></details>
     </nav>
     <div class="side-bottom"><p>Empowering Educators<br>Building Brighter Futures</p><button class="collapse" type="button" aria-label="Collapse navigation"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
   </aside>
