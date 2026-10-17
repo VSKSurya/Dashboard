@@ -310,7 +310,13 @@
       return {index,id:`B-${String(1001+index).padStart(4,'0')}`,status,phaseNumber:index%batchPhases.length+1,phase:batchPhases[index%batchPhases.length],stateIndex,districtIndex,blockIndex,schoolIndex,district,state,block,school,location:`${district}, ${state}`,trainer:batchTrainers[index%batchTrainers.length],teacherParticipants,studentParticipants,participants,attendance,completion,attendedParticipants:Math.round(participants*attendance/100),completedParticipants:Math.round(participants*completion/100),date};
   });
   let selectedAudience='Teacher';
-  let selectedPhase=null;
+  const currentPhaseCard=document.querySelector('.phase-card.current');
+  let selectedPhase=currentPhaseCard?.querySelector('h3')?.textContent.trim()??null;
+  document.querySelectorAll('.phase-card').forEach(card=>{
+    const isCurrent=card===currentPhaseCard;
+    card.classList.toggle('selected',isCurrent);
+    card.setAttribute('aria-pressed',String(isCurrent));
+  });
   const dashboardBatches=()=>selectedPhase?batchData.filter(batch=>batch.phase===selectedPhase):batchData;
   function phaseNumberLabel(batches=dashboardBatches()){
     const phaseNumbers=[...new Set(batches.map(batch=>batch.phaseNumber))].sort((a,b)=>a-b);
